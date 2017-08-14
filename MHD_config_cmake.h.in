@@ -1,0 +1,558 @@
+/* MHD_config.h.in.  Generated from configure.ac by autoheader.  */
+
+/* Define if building universal (internal helper macro) */
+#cmakedefine AC_APPLE_UNIVERSAL_BUILD @AC_APPLE_UNIVERSAL_BUILD@
+
+/* Define to 1 if libmicrohttpd is compiled with basic Auth support. */
+#cmakedefine BAUTH_SUPPORT @BAUTH_SUPPORT@
+
+/* This is a Cygwin system */
+#cmakedefine CYGWIN @CYGWIN@
+
+/* Define to 1 if libmicrohttpd is compiled with digest Auth support. */
+#cmakedefine DAUTH_SUPPORT @DAUTH_SUPPORT@
+
+/* Define to 1 to enable epoll support */
+#cmakedefine EPOLL_SUPPORT @EPOLL_SUPPORT@
+
+/* This is a FreeBSD system */
+#cmakedefine FREEBSD @FREEBSD@
+
+/* Define to 1 if you have the `accept4' function. */
+#cmakedefine HAVE_ACCEPT4 @HAVE_ACCEPT4@
+
+/* Define to 1 if you have the <arpa/inet.h> header file. */
+#cmakedefine HAVE_ARPA_INET_H @HAVE_ARPA_INET_H@
+
+/* Define to 1 if you have the `gmtime_s' function in C11 form. */
+#cmakedefine HAVE_C11_GMTIME_S @HAVE_C11_GMTIME_S@
+
+/* Define to 1 if you have the usable `calloc' function. */
+#cmakedefine HAVE_CALLOC @HAVE_CALLOC@
+
+/* Have clock_gettime */
+#cmakedefine HAVE_CLOCK_GETTIME @HAVE_CLOCK_GETTIME@
+
+/* Define to 1 if you have `clock_get_time', `host_get_clock_service' and
+   `mach_port_deallocate' functions. */
+#cmakedefine HAVE_CLOCK_GET_TIME @HAVE_CLOCK_GET_TIME@
+
+/* Define to 1 if you have the declaration of `SOCK_NONBLOCK', and to 0 if you
+   don't. */
+#cmakedefine HAVE_DECL_SOCK_NONBLOCK @HAVE_DECL_SOCK_NONBLOCK@
+
+/* Define to 1 if you have the <dlfcn.h> header file. */
+#cmakedefine HAVE_DLFCN_H @HAVE_DLFCN_H@
+
+/* Define to 1 if you have the <endian.h> header file. */
+#cmakedefine HAVE_ENDIAN_H @HAVE_ENDIAN_H@
+
+/* Define if you have epoll_create1 function. */
+#cmakedefine HAVE_EPOLL_CREATE1 @HAVE_EPOLL_CREATE1@
+
+/* Define to 1 if you have the <errno.h> header file. */
+#cmakedefine HAVE_ERRNO_H @HAVE_ERRNO_H@
+
+/* Define to 1 if you have the <fcntl.h> header file. */
+#cmakedefine HAVE_FCNTL_H @HAVE_FCNTL_H@
+
+/* Define to 1 if you have the usable `fork' function. */
+#cmakedefine HAVE_FORK @HAVE_FORK@
+
+/* Define to 1 if fseeko (and presumably ftello) exists and is declared. */
+#cmakedefine HAVE_FSEEKO @HAVE_FSEEKO@
+
+/* Define to 1 if you have the <gcrypt.h> header file. */
+#cmakedefine HAVE_GCRYPT_H @HAVE_GCRYPT_H@
+
+/* Define to 1 if you have `gethrtime' function. */
+#cmakedefine HAVE_GETHRTIME @HAVE_GETHRTIME@
+
+/* Define to 1 if you have the `[gettimeofday]' function. */
+#cmakedefine HAVE_GETTIMEOFDAY @HAVE_GETTIMEOFDAY@
+
+/* Define to 1 if you have the `gmtime_r' function. */
+#cmakedefine HAVE_GMTIME_R @HAVE_GMTIME_R@
+
+/* Define to 1 if you have the <gnutls/gnutls.h> header file. */
+#cmakedefine HAVE_GNUTLS_GNUTLS_H @HAVE_GNUTLS_GNUTLS_H@
+
+/* Provides IPv6 headers */
+#cmakedefine HAVE_INET6 @HAVE_INET6@
+
+/* Define to 1 if you have the <inetLib.h> header file. */
+#cmakedefine HAVE_INETLIB_H @HAVE_INETLIB_H@
+
+/* Define to 1 if you have the <inttypes.h> header file. */
+#cmakedefine HAVE_INTTYPES_H @HAVE_INTTYPES_H@
+
+/* Define to 1 if you have a functional curl library. */
+#cmakedefine HAVE_LIBCURL @HAVE_LIBCURL@
+
+/* Define to 1 if you have the <limits.h> header file. */
+#cmakedefine HAVE_LIMITS_H @HAVE_LIMITS_H@
+
+/* can use shutdown on listen sockets */
+#cmakedefine HAVE_LISTEN_SHUTDOWN @HAVE_LISTEN_SHUTDOWN@
+
+/* Define to 1 if you have the <locale.h> header file. */
+#cmakedefine HAVE_LOCALE_H @HAVE_LOCALE_H@
+
+/* Define to 1 if you have the `lseek64' function. */
+#cmakedefine HAVE_LSEEK64 @HAVE_LSEEK64@
+
+/* Define to 1 if you have the <machine/endian.h> header file. */
+#cmakedefine HAVE_MACHINE_ENDIAN_H @HAVE_MACHINE_ENDIAN_H@
+
+/* Define to 1 if you have the <machine/param.h> header file. */
+#cmakedefine HAVE_MACHINE_PARAM_H @HAVE_MACHINE_PARAM_H@
+
+/* Define to 1 if you have the <[magic.h]> header file. */
+#cmakedefine HAVE_MAGIC_H @HAVE_MAGIC_H@
+
+/* Define to 1 if you have the <math.h> header file. */
+#cmakedefine HAVE_MATH_H @HAVE_MATH_H@
+
+/* Define to 1 if you have the `memmem' function. */
+#cmakedefine HAVE_MEMMEM @HAVE_MEMMEM@
+
+/* Define to 1 if you have the <memory.h> header file. */
+#cmakedefine HAVE_MEMORY_H @HAVE_MEMORY_H@
+
+/* Define to 1 to enable support for error messages. */
+#cmakedefine HAVE_MESSAGES @HAVE_MESSAGES@
+
+/* Define to 1 if you have the `[nanosleep]' function. */
+#cmakedefine HAVE_NANOSLEEP @HAVE_NANOSLEEP@
+
+/* Define to 1 if you have the <netdb.h> header file. */
+#cmakedefine HAVE_NETDB_H @HAVE_NETDB_H@
+
+/* Define to 1 if you have the <netinet/in.h> header file. */
+#cmakedefine HAVE_NETINET_IN_H @HAVE_NETINET_IN_H@
+
+/* Define to 1 if you have the <netinet/ip.h> header file. */
+#cmakedefine HAVE_NETINET_IP_H @HAVE_NETINET_IP_H@
+
+/* Define to 1 if you have the <netinet/tcp.h> header file. */
+#cmakedefine HAVE_NETINET_TCP_H @HAVE_NETINET_TCP_H@
+
+/* Define to 1 if you have the <net/if.h> header file. */
+#cmakedefine HAVE_NET_IF_H @HAVE_NET_IF_H@
+
+/* Define if you have usable pipe2(2) function */
+#cmakedefine HAVE_PIPE2_FUNC @HAVE_PIPE2_FUNC@
+
+/* Define to 1 if you have the `poll' function. */
+#cmakedefine HAVE_POLL @HAVE_POLL@
+
+/* Define to 1 if you have the <poll.h> header file. */
+#cmakedefine HAVE_POLL_H @HAVE_POLL_H@
+
+/* Define to 1 if libmicrohttpd is compiled with postprocessor support. */
+#cmakedefine HAVE_POSTPROCESSOR @HAVE_POSTPROCESSOR@
+
+/* Define to 1 if you have the `pread' function. */
+#cmakedefine HAVE_PREAD @HAVE_PREAD@
+
+/* Define to 1 if you have the `pread64' function. */
+#cmakedefine HAVE_PREAD64 @HAVE_PREAD64@
+
+/* Define if you have IBM i form of pthread_attr_setname_np(3) function. */
+#cmakedefine HAVE_PTHREAD_ATTR_SETNAME_NP_IBMI @HAVE_PTHREAD_ATTR_SETNAME_NP_IBMI@
+
+/* Define if you have NetBSD form (or OSF1 form) of pthread_attr_setname_np(3)
+   function. */
+#cmakedefine HAVE_PTHREAD_ATTR_SETNAME_NP_NETBSD @HAVE_PTHREAD_ATTR_SETNAME_NP_NETBSD@
+
+/* Define to 1 if you have the <pthread.h> header file. */
+#cmakedefine HAVE_PTHREAD_H @HAVE_PTHREAD_H@
+
+/* Define to 1 if you have the <pthread_np.h> header file. */
+#cmakedefine HAVE_PTHREAD_NP_H @HAVE_PTHREAD_NP_H@
+
+/* Have PTHREAD_PRIO_INHERIT. */
+#cmakedefine HAVE_PTHREAD_PRIO_INHERIT @HAVE_PTHREAD_PRIO_INHERIT@
+
+/* Define if you have Darwin form of pthread_setname_np(3) function. */
+#cmakedefine HAVE_PTHREAD_SETNAME_NP_DARWIN @HAVE_PTHREAD_SETNAME_NP_DARWIN@
+
+/* Define if you have GNU/Linux form of pthread_setname_np(3) function. */
+#cmakedefine HAVE_PTHREAD_SETNAME_NP_GNU @HAVE_PTHREAD_SETNAME_NP_GNU@
+
+/* Define if you have NetBSD form (or OSF1 form) of pthread_setname_np(3)
+   function. */
+#cmakedefine HAVE_PTHREAD_SETNAME_NP_NETBSD @HAVE_PTHREAD_SETNAME_NP_NETBSD@
+
+/* Define if you have FreeBSD form of pthread_set_name_np(3) function. */
+#cmakedefine HAVE_PTHREAD_SET_NAME_NP_FREEBSD @HAVE_PTHREAD_SET_NAME_NP_FREEBSD@
+
+/* Define to 1 if you have the `rand' function. */
+#cmakedefine HAVE_RAND @HAVE_RAND@
+
+/* Define to 1 if you have the `random' function. */
+#cmakedefine HAVE_RANDOM @HAVE_RANDOM@
+
+/* Define to 1 if you have the real boolean type. */
+#cmakedefine HAVE_REAL_BOOL @HAVE_REAL_BOOL@
+
+/* Define to 1 if you have the <search.h> header file and your system have
+   properly functioning tsearch(), tfind() and tdelete() functions */
+#cmakedefine HAVE_SEARCH_H @HAVE_SEARCH_H@
+
+/* Define to 1 if you have the `sendfile64' function. */
+#cmakedefine HAVE_SENDFILE64 @HAVE_SENDFILE64@
+
+/* Define to 1 if you have the `snprintf' function. */
+#cmakedefine HAVE_SNPRINTF @HAVE_SNPRINTF@
+
+/* Do we have sockaddr_in.sin_len? */
+#cmakedefine HAVE_SOCKADDR_IN_SIN_LEN @HAVE_SOCKADDR_IN_SIN_LEN@
+
+/* Define to 1 if you have the <sockLib.h> header file. */
+#cmakedefine HAVE_SOCKLIB_H @HAVE_SOCKLIB_H@
+
+/* SOCK_NONBLOCK is defined in a socket header */
+#cmakedefine HAVE_SOCK_NONBLOCK @HAVE_SOCK_NONBLOCK@
+
+/* Define to 1 if you have the <stdbool.h> header file and <stdbool.h> defines
+   'bool' type. */
+#cmakedefine HAVE_STDBOOL_H @HAVE_STDBOOL_H@
+
+/* Define to 1 if you have the <stddef.h> header file. */
+#cmakedefine HAVE_STDDEF_H @HAVE_STDDEF_H@
+
+/* Define to 1 if you have the <stdint.h> header file. */
+#cmakedefine HAVE_STDINT_H @HAVE_STDINT_H@
+
+/* Define to 1 if you have the <stdio.h> header file. */
+#cmakedefine HAVE_STDIO_H @HAVE_STDIO_H@
+
+/* Define to 1 if you have the <stdlib.h> header file. */
+#cmakedefine HAVE_STDLIB_H @HAVE_STDLIB_H@
+
+/* Define to 1 if you have the <strings.h> header file. */
+#cmakedefine HAVE_STRINGS_H @HAVE_STRINGS_H@
+
+/* Define to 1 if you have the <string.h> header file. */
+#cmakedefine HAVE_STRING_H @HAVE_STRING_H@
+
+/* Define to 1 if you have the <sys/byteorder.h> header file. */
+#cmakedefine HAVE_SYS_BYTEORDER_H @HAVE_SYS_BYTEORDER_H@
+
+/* Define to 1 if you have the <sys/endian.h> header file. */
+#cmakedefine HAVE_SYS_ENDIAN_H @HAVE_SYS_ENDIAN_H@
+
+/* Define to 1 if you have the <[sys/eventfd.h]> header file. */
+#cmakedefine HAVE_SYS_EVENTFD_H @HAVE_SYS_EVENTFD_H@
+
+/* Define to 1 if you have the <sys/ioctl.h> header file. */
+#cmakedefine HAVE_SYS_IOCTL_H @HAVE_SYS_IOCTL_H@
+
+/* Define to 1 if you have the <sys/isa_defs.h> header file. */
+#cmakedefine HAVE_SYS_ISA_DEFS_H @HAVE_SYS_ISA_DEFS_H@
+
+/* Define to 1 if you have the <sys/machine.h> header file. */
+#cmakedefine HAVE_SYS_MACHINE_H @HAVE_SYS_MACHINE_H@
+
+/* Define to 1 if you have the <sys/mman.h> header file. */
+#cmakedefine HAVE_SYS_MMAN_H @HAVE_SYS_MMAN_H@
+
+/* Define to 1 if you have the <sys/msg.h> header file. */
+#cmakedefine HAVE_SYS_MSG_H @HAVE_SYS_MSG_H@
+
+/* Define to 1 if you have the <sys/param.h> header file. */
+#cmakedefine HAVE_SYS_PARAM_H @HAVE_SYS_PARAM_H@
+
+/* Define to 1 if you have the <sys/select.h> header file. */
+#cmakedefine HAVE_SYS_SELECT_H @HAVE_SYS_SELECT_H@
+
+/* Define to 1 if you have the <sys/socket.h> header file. */
+#cmakedefine HAVE_SYS_SOCKET_H @HAVE_SYS_SOCKET_H@
+
+/* Define to 1 if you have the <sys/stat.h> header file. */
+#cmakedefine HAVE_SYS_STAT_H @HAVE_SYS_STAT_H@
+
+/* Define to 1 if you have the <sys/time.h> header file. */
+#cmakedefine HAVE_SYS_TIME_H @HAVE_SYS_TIME_H@
+
+/* Define to 1 if you have the <sys/types.h> header file. */
+#cmakedefine HAVE_SYS_TYPES_H @HAVE_SYS_TYPES_H@
+
+/* Define to 1 if you have the <time.h> header file. */
+#cmakedefine HAVE_TIME_H @HAVE_TIME_H@
+
+/* Define to 1 if you have the `tsearch' function. */
+#cmakedefine HAVE_TSEARCH @HAVE_TSEARCH@
+
+/* Define to 1 if you have the <unistd.h> header file. */
+#cmakedefine HAVE_UNISTD_H @HAVE_UNISTD_H@
+
+/* Define to 1 if you have the `[usleep]' function. */
+#cmakedefine HAVE_USLEEP @HAVE_USLEEP@
+
+/* Define to 1 if you have the `gmtime_s' function in W32 form. */
+#cmakedefine HAVE_W32_GMTIME_S @HAVE_W32_GMTIME_S@
+
+/* Define to 1 if you have the usable `waitpid' function. */
+#cmakedefine HAVE_WAITPID @HAVE_WAITPID@
+
+/* Define to 1 if you have the <winsock2.h> header file. */
+#cmakedefine HAVE_WINSOCK2_H @HAVE_WINSOCK2_H@
+
+/* Define to 1 if you have the <ws2tcpip.h> header file. */
+#cmakedefine HAVE_WS2TCPIP_H @HAVE_WS2TCPIP_H@
+
+/* Define to 1 if libmicrohttpd is compiled with HTTPS support. */
+#cmakedefine HTTPS_SUPPORT @HTTPS_SUPPORT@
+
+/* Define to 1 if your C compiler supports inline functions. */
+#cmakedefine INLINE_FUNC @INLINE_FUNC@
+
+/* Defined if libcurl supports AsynchDNS */
+#cmakedefine LIBCURL_FEATURE_ASYNCHDNS @LIBCURL_FEATURE_ASYNCHDNS@
+
+/* Defined if libcurl supports IDN */
+#cmakedefine LIBCURL_FEATURE_IDN @LIBCURL_FEATURE_IDN@
+
+/* Defined if libcurl supports IPv6 */
+#cmakedefine LIBCURL_FEATURE_IPV6 @LIBCURL_FEATURE_IPV6@
+
+/* Defined if libcurl supports KRB4 */
+#cmakedefine LIBCURL_FEATURE_KRB4 @LIBCURL_FEATURE_KRB4@
+
+/* Defined if libcurl supports libz */
+#cmakedefine LIBCURL_FEATURE_LIBZ @LIBCURL_FEATURE_LIBZ@
+
+/* Defined if libcurl supports NTLM */
+#cmakedefine LIBCURL_FEATURE_NTLM @LIBCURL_FEATURE_NTLM@
+
+/* Defined if libcurl supports SSL */
+#cmakedefine LIBCURL_FEATURE_SSL @LIBCURL_FEATURE_SSL@
+
+/* Defined if libcurl supports SSPI */
+#cmakedefine LIBCURL_FEATURE_SSPI @LIBCURL_FEATURE_SSPI@
+
+/* Defined if libcurl supports DICT */
+#cmakedefine LIBCURL_PROTOCOL_DICT @LIBCURL_PROTOCOL_DICT@
+
+/* Defined if libcurl supports FILE */
+#cmakedefine LIBCURL_PROTOCOL_FILE @LIBCURL_PROTOCOL_FILE@
+
+/* Defined if libcurl supports FTP */
+#cmakedefine LIBCURL_PROTOCOL_FTP @LIBCURL_PROTOCOL_FTP@
+
+/* Defined if libcurl supports FTPS */
+#cmakedefine LIBCURL_PROTOCOL_FTPS @LIBCURL_PROTOCOL_FTPS@
+
+/* Defined if libcurl supports HTTP */
+#cmakedefine LIBCURL_PROTOCOL_HTTP @LIBCURL_PROTOCOL_HTTP@
+
+/* Defined if libcurl supports HTTPS */
+#cmakedefine LIBCURL_PROTOCOL_HTTPS @LIBCURL_PROTOCOL_HTTPS@
+
+/* Defined if libcurl supports IMAP */
+#cmakedefine LIBCURL_PROTOCOL_IMAP @LIBCURL_PROTOCOL_IMAP@
+
+/* Defined if libcurl supports LDAP */
+#cmakedefine LIBCURL_PROTOCOL_LDAP @LIBCURL_PROTOCOL_LDAP@
+
+/* Defined if libcurl supports POP3 */
+#cmakedefine LIBCURL_PROTOCOL_POP3 @LIBCURL_PROTOCOL_POP3@
+
+/* Defined if libcurl supports RTSP */
+#cmakedefine LIBCURL_PROTOCOL_RTSP @LIBCURL_PROTOCOL_RTSP@
+
+/* Defined if libcurl supports SMTP */
+#cmakedefine LIBCURL_PROTOCOL_SMTP @LIBCURL_PROTOCOL_SMTP@
+
+/* Defined if libcurl supports TELNET */
+#cmakedefine LIBCURL_PROTOCOL_TELNET @LIBCURL_PROTOCOL_TELNET@
+
+/* Defined if libcurl supports TFTP */
+#cmakedefine LIBCURL_PROTOCOL_TFTP @LIBCURL_PROTOCOL_TFTP@
+
+/* This is a Linux kernel */
+#cmakedefine LINUX @LINUX@
+
+/* Define to the sub-directory where libtool stores uninstalled libraries. */
+#cmakedefine LT_OBJDIR @LT_OBJDIR@
+
+/* Define to 1 to disable setting name on generated threads */
+#cmakedefine MHD_NO_THREAD_NAMES @MHD_NO_THREAD_NAMES@
+
+/* gnuTLS lib version - used in conjunction with cURL */
+#cmakedefine MHD_REQ_CURL_GNUTLS_VERSION "@MHD_REQ_CURL_GNUTLS_VERSION@"
+
+/* NSS lib version - used in conjunction with cURL */
+#cmakedefine MHD_REQ_CURL_NSS_VERSION "@MHD_REQ_CURL_NSS_VERSION@"
+
+/* required cURL SSL version to run tests */
+#cmakedefine MHD_REQ_CURL_OPENSSL_VERSION "@MHD_REQ_CURL_OPENSSL_VERSION@"
+
+/* required cURL version to run tests */
+#cmakedefine MHD_REQ_CURL_VERSION "@MHD_REQ_CURL_VERSION@"
+
+/* define to use pthreads */
+#cmakedefine MHD_USE_POSIX_THREADS @MHD_USE_POSIX_THREADS@
+
+/* define to use W32 threads */
+#cmakedefine MHD_USE_W32_THREADS @MHD_USE_W32_THREADS@
+
+/* This is a MinGW system */
+#cmakedefine MINGW @MINGW@
+
+/* This is a NetBSD system */
+#cmakedefine NETBSD @NETBSD@
+
+/* This is an OpenBSD system */
+#cmakedefine OPENBSD @OPENBSD@
+
+/* This is a OS/390 system */
+#cmakedefine OS390 @OS390@
+
+/* This is an OS X system */
+#cmakedefine OSX @OSX@
+
+/* Some strange OS */
+#cmakedefine OTHEROS @OTHEROS@
+
+/* Name of package */
+#cmakedefine PACKAGE "@PACKAGE@"
+
+/* Define to the address where bug reports for this package should be sent. */
+#cmakedefine PACKAGE_BUGREPORT "@PACKAGE_BUGREPORT@"
+
+/* Define to the full name of this package. */
+#cmakedefine PACKAGE_NAME "@PACKAGE_NAME@"
+
+/* Define to the full name and version of this package. */
+#cmakedefine PACKAGE_STRING "@PACKAGE_STRING@"
+
+/* Define to the one symbol short name of this package. */
+#cmakedefine PACKAGE_TARNAME "@PACKAGE_TARNAME@"
+
+/* Define to the home page for this package. */
+#cmakedefine PACKAGE_URL "@PACKAGE_URL@"
+
+/* Define to the version of this package. */
+#cmakedefine PACKAGE_VERSION "@PACKAGE_VERSION@"
+
+/* Define to necessary symbol if this constant uses a non-standard name on
+   your system. */
+#cmakedefine PTHREAD_CREATE_JOINABLE @PTHREAD_CREATE_JOINABLE@
+
+/* This is a Solaris system */
+#cmakedefine SOLARIS @SOLARIS@
+
+/* This is a BSD system */
+#cmakedefine SOMEBSD @SOMEBSD@
+
+/* Define to 1 if you have the ANSI C header files. */
+#cmakedefine STDC_HEADERS @STDC_HEADERS@
+
+/* Define to 1 if libmicrohttpd is compiled with HTTP Upgrade support. */
+#cmakedefine UPGRADE_SUPPORT @UPGRADE_SUPPORT@
+
+/* Version number of package */
+#cmakedefine VERSION "@VERSION@"
+
+/* This is a Windows system */
+#cmakedefine WINDOWS @WINDOWS@
+
+/* The Windows version */
+#cmakedefine _WIN32_WINNT @_WIN32_WINNT@
+
+/* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
+   significant byte first (like Motorola and SPARC, unlike Intel). */
+#if defined AC_APPLE_UNIVERSAL_BUILD
+# if defined __BIG_ENDIAN__
+#  define WORDS_BIGENDIAN 1
+# endif
+#else
+# ifndef WORDS_BIGENDIAN
+   #cmakedefine WORDS_BIGENDIAN
+# endif
+#endif
+
+/* Define to 1 if it is required by headers to expose additional symbols */
+#cmakedefine _ALL_SOURCE @_ALL_SOURCE@
+
+/* Define to 1 if it is required by headers to expose additional symbols */
+#cmakedefine _BSD_SOURCE @_BSD_SOURCE@
+
+/* Define to 1 if it is required by headers to expose additional symbols */
+#cmakedefine _DARWIN_C_SOURCE @_DARWIN_C_SOURCE@
+
+/* Enable large inode numbers on Mac OS X 10.5.  */
+#ifndef _DARWIN_USE_64_BIT_INODE
+# define _DARWIN_USE_64_BIT_INODE 1
+#endif
+
+/* Number of bits in a file offset, on hosts where this is settable. */
+#cmakedefine _FILE_OFFSET_BITS @_FILE_OFFSET_BITS@
+
+/* Define to 1 to enable GNU-related header features */
+#cmakedefine _GNU_SOURCE @_GNU_SOURCE@
+
+/* Define to 1 to make fseeko visible on some hosts (e.g. glibc 2.2). */
+#cmakedefine _LARGEFILE_SOURCE @_LARGEFILE_SOURCE@
+
+/* Define for large files, on AIX-style hosts. */
+#cmakedefine _LARGE_FILES @_LARGE_FILES@
+
+/* defines how to decorate public symbols while building */
+#cmakedefine _MHD_EXTERN @_MHD_EXTERN@
+
+/* Define to use eventFD for inter-thread communication */
+#cmakedefine _MHD_ITC_EVENTFD @_MHD_ITC_EVENTFD@
+
+/* Define to use pipe for inter-thread communication */
+#cmakedefine _MHD_ITC_PIPE @_MHD_ITC_PIPE@
+
+/* Define to use socketpair for inter-thread communication */
+#cmakedefine _MHD_ITC_SOCKETPAIR @_MHD_ITC_SOCKETPAIR@
+
+/* Define to prefix which will be used with MHD inline functions. */
+#cmakedefine _MHD_inline @_MHD_inline@
+
+/* Define to 1 if it is required by headers to expose additional symbols */
+#cmakedefine _NETBSD_SOURCE @_NETBSD_SOURCE@
+
+/* Need with solaris or errno doesnt work */
+#cmakedefine _REENTRANT @_REENTRANT@
+
+/* Define to 1 if it is required by headers to expose additional symbols */
+#cmakedefine _TANDEM_SOURCE @_TANDEM_SOURCE@
+
+/* Define to maximum value supported by system headers */
+#cmakedefine _XOPEN_SOURCE @_XOPEN_SOURCE@
+
+/* Define to 1 if _XOPEN_SOURCE is defined to value less than 500 and system
+   headers requre this symbol */
+#cmakedefine _XOPEN_SOURCE_EXTENDED @_XOPEN_SOURCE_EXTENDED@
+
+/* Define to maximum value supported by system headers if _XOPEN_SOURCE is
+   defined to value less than 500 and headers do not support
+   _XOPEN_SOURCE_EXTENDED */
+#cmakedefine _XOPEN_VERSION @_XOPEN_VERSION@
+
+/* Define to 1 if it is required by headers to expose additional symbols */
+#cmakedefine __BSD_VISIBLE @__BSD_VISIBLE@
+
+/* Define to 1 if it is required by headers to expose additional symbols */
+#cmakedefine __EXTENSIONS__ @__EXTENSIONS__@
+
+/* Define to type name which will be used as boolean type. */
+#cmakedefine bool @bool@
+
+/* Define curl_free() as free() if our version of curl lacks curl_free. */
+#cmakedefine curl_free @curl_free@
+
+/* Define to value interpreted by compiler as boolean "false", if "false" is
+   not defined by system headers. */
+#cmakedefine false @false@
+
+/* Define to value interpreted by compiler as boolean "true", if "true" is not
+   defined by system headers. */
+#cmakedefine true @true@
