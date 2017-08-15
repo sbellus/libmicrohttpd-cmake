@@ -16,8 +16,13 @@ include(cmake/DetermineSystemExtension)
 include(cmake/FindLibGCrypt)
 include(cmake/FindNSS)
 include(cmake/DetermineTargetEndianess)
+include(cmake/DetermineStdCHeaders)
 
-project(libmicrohttpd LANGUAGES C VERSION 0.9.55)
+set(major 0)
+set(minor 9)
+set(micro 55)
+
+project(libmicrohttpd LANGUAGES C VERSION ${major}.${minor}.${micro})
 
 set(ENABLE_BAUTH          yes     CACHE BOOL "Enable basic Auth support")
 set(ENABLE_DAUTH          yes     CACHE BOOL "Enable digest Auth support")
@@ -29,6 +34,9 @@ set(ENABLE_HTTPS          yes     CACHE BOOL "Enable HTTPS support")
 set(DISABLE_THREAD_NAMES  no      CACHE BOOL "Disable setting name on generated threads")
 set(ENABLE_UPGRADE        yes     CACHE BOOL "Enable Upgrade support")
 set(MHD_ITC               auto    CACHE STRING "For inter process communication choose one of pipe, socketpair, eventfd, auto")
+set(ENABLE_TESTS          yes     CACHE BOOL "Enable tests build")
+set(ENABLE_EXAMPLES       yes     CACHE BOOL "Enable examples build")
+set(ENABLE_DOC            yes     CACHE BOOL "Enable documentation build")
 
 if ("FreeBSD" STREQUAL "${CMAKE_SYSTEM_NAME}")
     set(FREEBSD 1)
@@ -468,8 +476,10 @@ foreach(PossibleInline ${PossibleInlines})
         break()
     endif()
 endforeach()
-check_c_compiler_flag(-fvisibility=hidden HAVE_OPTION_VISIBILITY)
-if(HAVE_OPTION_VISIBILITY AND CMAKE_COMPILER_IS_GNUCC AND CMAKE_C_COMPILER_VERSION VERSION_GREATER "4.2")
+if (CMAKE_COMPILER_IS_GNUCC AND CMAKE_C_COMPILER_VERSION VERSION_GREATER "4.2")
+    check_c_compiler_flag(-fvisibility=hidden HAVE_OPTION_VISIBILITY)
+endif()    
+if(HAVE_OPTION_VISIBILITY)
     set(_MHD_EXTERN "__attribute__((visibility(\"default\"))) extern")
 elseif(WINDOWS)
     set(_MHD_EXTERN "__declspec(dllexport) extern")
@@ -486,6 +496,11 @@ if (CURL_FOUND)
     FindNSS()
     set(MHD_REQ_CURL_NSS_VERSION "${NSS_VERSION}")
 
+    set(MHD_REQ_CURL_VERSION "7.16.4") # required cURL version to run tests
+    set(MHD_REQ_CURL_OPENSSL_VERSION "0.9.8") # required cURL SSL version to run tests
+    set(MHD_REQ_CURL_GNUTLS_VERSION "2.8.6") # gnuTLS lib version - used in conjunction with cURL
+    set(MHD_REQ_CURL_NSS_VERSION "3.12.0") # NSS lib version - used in conjunction with cURL
+  
     set(HAVE_LIBCURL 1)
     find_program(CURL_CONFIG curl-config)
     if (CURL_CONFIG)
@@ -515,13 +530,7 @@ set(PACKAGE_URL "http://www.gnu.org/software/libmicrohttpd/")
 set(PACKAGE_VERSION "${PROJECT_VERSION}")
 set(VERSION "${PROJECT_VERSION}")
 
-#
-#/* Define to necessary symbol if this constant uses a non-standard name on
-#   your system. */
-#/* #undef PTHREAD_CREATE_JOINABLE */
-#
-
-set(STDC_HEADERS 1)
+determine_std_c_headers(STDC_HEADERS)
 
 set(AvailableInterPorcessCommunication "")
 if (WINDOWS)
@@ -975,15 +984,19 @@ set(CMAKE_REQUIRED_DEFINITIONS ${old_CMAKE_REQUIRED_DEFINITIONS})
 
 configure_file(MHD_config_cmake.h.in MHD_config.h)
 
-if(NOT HAVE_SEARCH_H)
-    set(PlatformSpecificSources 
-        src/microhttpd/tsearch.c
-    )
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
+
+get_property(isSharedLibSupported GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS)
+
+if(isSharedLibSupported)
+    set(libraryType SHARED)
+else()
+    set(libraryType STATIC)
 endif()
 
-
-
-add_library(microhttpd
+add_library(microhttpd ${libraryType}
         src/microhttpd/connection.c
         src/microhttpd/reason_phrase.c
         src/microhttpd/daemon.c
@@ -997,14 +1010,69 @@ add_library(microhttpd
         src/microhttpd/mhd_itc.c
         src/microhttpd/mhd_compat.c
         src/microhttpd/response.c
-        ${PlatformSpecificSources}
 )
 
+if(NOT HAVE_SEARCH_H)
+    target_sources(microhttpd PRIVATE src/microhttpd/tsearch.c)
+endif()
+
+if(HAVE_POSTPROCESSOR)
+    target_sources(microhttpd PRIVATE src/microhttpd/postprocessor.c)
+endif()
+
+if(DAUTH_SUPPORT)
+    target_sources(microhttpd PRIVATE src/microhttpd/digestauth.c src/microhttpd/md5.c)
+endif()
+
+if(BAUTH_SUPPORT)
+    target_sources(microhttpd PRIVATE src/microhttpd/basicauth.c src/microhttpd/base64.c)
+endif()
+
+if(HTTPS_SUPPORT)
+    target_sources(microhttpd PRIVATE src/microhttpd/connection_https.c)
+endif()
+
+set_target_properties(microhttpd
+    PROPERTIES
+	    # create *nix style library versions + symbolic links
+	    VERSION ${major}.${minor}.${micro}
+	    SOVERSION ${major}
+	    INSTALL_RPATH ""
+)
 target_include_directories(microhttpd PRIVATE src/microhttpd src/include ${CMAKE_BINARY_DIR})
 target_compile_definitions(microhttpd PRIVATE ${CMAKE_REQUIRED_DEFINITIONS})
 target_link_libraries(microhttpd PRIVATE ${CMAKE_REQUIRED_LIBRARIES})
+if (NSS_FOUND)
+    target_link_libraries(microhttpd PRIVATE ${NSS_LDFLAGS})
+    target_compile_definitions(microhttpd PRIVATE ${NSS_CFLAGS_OTHER})
+endif()
+if (LIBGCRYPT_FOUND)
+    target_link_libraries(microhttpd PRIVATE ${LIBGCRYPT_LIBRARIES})
+endif()
+if (GNUTLS_FOUND)
+    target_link_libraries(microhttpd PRIVATE ${GNUTLS_LIBRARIES})
+    target_compile_definitions(microhttpd PRIVATE ${GNUTLS_DEFINITIONS})
+endif()
 if (HAVE_OPTION_VISIBILITY)
     target_compile_options(microhttpd PRIVATE -fvisibility=hidden)
+endif()
+
+install(TARGETS microhttpd
+    EXPORT ${PROJECT_NAME}
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib NAMELINK_SKIP
+    ARCHIVE DESTINATION lib)
+install(EXPORT ${PROJECT_NAME} NAMESPACE mirohttpd DESTINATION lib/${PROJECT_NAME})    
+install(DIRECTORY ${PROJECT_SOURCE_DIR}/src/include DESTINATION include PATTERN *.h PERMISSIONS OWNER_READ GROUP_READ)
+
+if (ENABLE_TESTS)
+    add_subdirectory(src/testcurl)
+endif()
+if (ENABLE_EXAMPLES)
+    add_subdirectory(src/examples)
+endif()
+if (ENABLE_DOC)
+    add_subdirectory(doc/doxygen)
 endif()
 
 if (CMAKE_CROSSCOMPILING)
@@ -1032,7 +1100,8 @@ message(
   HTTPS support:     ${MSG_HTTPS}
   poll support:      ${MSG_POLL}
   epoll support:     ${MSG_EPOLL}
-  build docs:        no
-  build examples:    no"
+  build docs:        ${ENABLE_DOC}
+  build examples:    ${ENABLE_EXAMPLES}
+  build tests:       ${ENABLE_TESTS}"
  )
  
