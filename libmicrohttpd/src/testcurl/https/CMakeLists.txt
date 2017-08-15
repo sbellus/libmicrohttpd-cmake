@@ -36,20 +36,20 @@ include(FindThreads)
 if (CMAKE_USE_PTHREADS_INIT)
     add_executable(test_https_get_parallel test_https_get_parallel.c tls_test_common.c)
     target_link_libraries(test_https_get_parallel microhttpd libcurl_version_check ${GNUTLS_LIBRARIES} ${CURL_LIBRARIES})
-    add_test(NAME https_get_parallel COMMAND test_https_get_parallel)    
+    add_test(NAME https_get_parallel COMMAND test_https_get_parallel)
 endif()
 
 add_executable(test_tls_options test_tls_options.c tls_test_common.c)
 target_link_libraries(test_tls_options microhttpd libcurl_version_check ${GNUTLS_LIBRARIES} ${CURL_LIBRARIES})
 add_test(NAME tls_options COMMAND test_tls_options)
-    
+
 add_executable(test_tls_authentication test_tls_authentication.c tls_test_common.c)
 target_link_libraries(test_tls_authentication microhttpd libcurl_version_check ${GNUTLS_LIBRARIES} ${CURL_LIBRARIES})
 add_test(NAME tls_authentication COMMAND test_tls_authentication)
-    
+
 add_executable(test_https_multi_daemon test_https_multi_daemon.c tls_test_common.c)
 target_link_libraries(test_https_multi_daemon microhttpd libcurl_version_check ${GNUTLS_LIBRARIES} ${CURL_LIBRARIES})
-add_test(NAME https_multi_daemon COMMAND test_https_multi_daemon)    
+add_test(NAME https_multi_daemon COMMAND test_https_multi_daemon)
 
 add_executable(test_https_get test_https_get.c tls_test_common.c)
 target_link_libraries(test_https_get microhttpd libcurl_version_check ${GNUTLS_LIBRARIES} ${CURL_LIBRARIES})
@@ -69,5 +69,5 @@ add_test(NAME https_time_out COMMAND test_https_time_out)
 
 add_executable(test_empty_response test_empty_response.c tls_test_common.c)
 target_link_libraries(test_empty_response microhttpd libcurl_version_check ${GNUTLS_LIBRARIES} ${CURL_LIBRARIES})
-add_test(NAME empty_response COMMAND test_empty_response)                                                
+add_test(NAME empty_response COMMAND test_empty_response)
 

@@ -7,64 +7,64 @@ include(CheckSymbolExists)
 function(determine_x_open_source BasicIncludes XOpenSource)
         set(old_CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS})
     set(CMAKE_REQUIRED_DEFINITIONS -D_XOPEN_SOURCE=700)
-    
+
     # Check if _XOPEN_SOURCE version 700 is supported
-	check_c_source_compiles("
-	    ${BasicIncludes}
-	    
-        /* Check will be passed if ALL features are avalable 
+    check_c_source_compiles("
+        ${BasicIncludes}
+
+        /* Check will be passed if ALL features are avalable
          * and failed if ANY feature is not avalable. */
         int main()
         {
-        
+
         #ifndef stpncpy
           (void) stpncpy;
         #endif
         #ifndef strnlen
           (void) strnlen;
         #endif
-        
+
         #if !defined(__NetBSD__) && !defined(__OpenBSD__)
         /* NetBSD and OpenBSD didn't implement wcsnlen() for some reason. */
         #ifndef wcsnlen
           (void) wcsnlen;
         #endif
         #endif
-        
+
         #ifdef __CYGWIN__
         /* The only depend function on Cygwin, but missing on some other platforms */
         #ifndef strndup
           (void) strndup;
         #endif
         #endif
-        
+
         #ifndef __sun
         /* illumos forget to uncomment some _XPG7 macros. */
         #ifndef renameat
           (void) renameat;
         #endif
-        
+
         #ifndef getline
           (void) getline;
         #endif
         #endif /* ! __sun */
-        
+
         /* gmtime_r() becomes mandatory only in POSIX.1-2008. */
         #ifndef gmtime_r
           (void) gmtime_r;
         #endif
-        
+
         /* unsetenv() actually defined in POSIX.1-2001 so it
          * must be present with _XOPEN_SOURCE == 700 too. */
         #ifndef unsetenv
           (void) unsetenv;
         #endif
-        
+
           return 0;
         }
-	
-		" SUPPORT_XOPEN_SOURCE_700
-	)
+
+        " SUPPORT_XOPEN_SOURCE_700
+    )
 
     set(CMAKE_REQUIRED_DEFINITIONS ${old_CMAKE_REQUIRED_DEFINITIONS})
 
@@ -72,32 +72,32 @@ function(determine_x_open_source BasicIncludes XOpenSource)
         set(${XOpenSource} 700 PARENT_SCOPE)
         return()
     endif()
-    
+
     # Check if _XOPEN_SOURCE version 600 is supported
     set(old_CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS})
     set(CMAKE_REQUIRED_DEFINITIONS -D_XOPEN_SOURCE=600)
-    
-	check_c_source_compiles("
-	    ${BasicIncludes}
+
+    check_c_source_compiles("
+        ${BasicIncludes}
 
         /* Check will be passed if ALL features are available
          * and failed if ANY feature is not available. */
         int main()
         {
-        
+
         #ifndef setenv
           (void) setenv;
         #endif
-        
+
         #ifndef __NetBSD__
         #ifndef vsscanf
           (void) vsscanf;
         #endif
         #endif
-        
+
         /* Availability of next features varies, but they all must be present
          * on platform with support for _XOPEN_SOURCE = 600. */
-        
+
         /* vsnprintf() should be available with _XOPEN_SOURCE >= 500, but some platforms
          * provide it only with _POSIX_C_SOURCE >= 200112 (autodefined when
          * _XOPEN_SOURCE >= 600) where specification of vsnprintf() is aligned with
@@ -105,14 +105,14 @@ function(determine_x_open_source BasicIncludes XOpenSource)
         #ifndef vsnprintf
           (void) vsnprintf;
         #endif
-        
+
         /* On platforms that prefer POSIX over X/Open, fseeko() is available
          * with _POSIX_C_SOURCE >= 200112 (autodefined when _XOPEN_SOURCE >= 600).
          * On other platforms it should be available with _XOPEN_SOURCE >= 500. */
         #ifndef fseeko
           (void) fseeko;
         #endif
-        
+
         /* F_GETOWN must be defined with _XOPEN_SOURCE >= 600, but some platforms
          * define it with _XOPEN_SOURCE >= 500. */
         #ifndef F_GETOWN
@@ -120,24 +120,24 @@ function(determine_x_open_source BasicIncludes XOpenSource)
         #endif
           return 0;
         }
-	
-		" SUPPORT_XOPEN_SOURCE_600
-	)
-    
+
+        " SUPPORT_XOPEN_SOURCE_600
+    )
+
     set(CMAKE_REQUIRED_DEFINITIONS ${old_CMAKE_REQUIRED_DEFINITIONS})
 
     if (SUPPORT_XOPEN_SOURCE_600)
         set(${XOpenSource} 600 PARENT_SCOPE)
         return()
     endif()
-    
+
     # Check if _XOPEN_SOURCE version 500 is supported
     set(old_CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS})
     set(CMAKE_REQUIRED_DEFINITIONS -D_XOPEN_SOURCE=500)
 
 
-	check_c_source_compiles("
-	    ${BasicIncludes}
+    check_c_source_compiles("
+        ${BasicIncludes}
 
         /* Check will be passed if ALL features are available
          * and failed if ANY feature is not available. */
@@ -146,29 +146,29 @@ function(determine_x_open_source BasicIncludes XOpenSource)
         /* It's not easy to write reliable test for _XOPEN_SOURCE = 500 as
          * platforms not always precisely follow this standard and some
          * functions are already deprecated in later standards. */
-        
+
         /* Availability of next features varies, but they all must be present
          * on platform with correct support for _XOPEN_SOURCE = 500. */
-        
+
         /* Mandatory with _XOPEN_SOURCE >= 500 but as XSI extension available
          * with much older standards. */
         #ifndef ftruncate
           (void) ftruncate;
         #endif
-        
+
         /* Added with _XOPEN_SOURCE >= 500 but was available in some standards
          * before. XSI extension. */
         #ifndef pread
           (void) pread;
         #endif
-        
+
         #ifndef __APPLE__
         /* Actually comes from XPG4v2 and must be available
          * with _XOPEN_SOURCE >= 500 as well. */
         #ifndef symlink
           (void) symlink;
         #endif
-        
+
         /* Actually comes from XPG4v2 and must be available
          * with _XOPEN_SOURCE >= 500 as well. XSI extension. */
         #ifndef strdup
@@ -178,32 +178,32 @@ function(determine_x_open_source BasicIncludes XOpenSource)
           return 0;
         }
 
-	
-		" SUPPORT_XOPEN_SOURCE_500
-	)
-    
+
+        " SUPPORT_XOPEN_SOURCE_500
+    )
+
     if (SUPPORT_XOPEN_SOURCE_500)
         set(${XOpenSource} 500 PARENT_SCOPE)
         return()
     endif()
-    
+
     # Check if _XOPEN_SOURCE version 1 is supported
     set(old_CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS})
     set(CMAKE_REQUIRED_DEFINITIONS -D_XOPEN_SOURCE=1)
 
 
-	check_c_source_compiles("
-	    ${BasicIncludes}
+    check_c_source_compiles("
+        ${BasicIncludes}
 
         int main()
         {
           return 0;
         }
 
-	
-		" SUPPORT_XOPEN_SOURCE_1
-	)
-    
+
+        " SUPPORT_XOPEN_SOURCE_1
+    )
+
     if (SUPPORT_XOPEN_SOURCE_1)
         set(${XOpenSource} 1 PARENT_SCOPE)
         return()
@@ -238,14 +238,14 @@ macro(determine_system_extension)
     check_include_files(unistd.h HAVE_UNISTD_H)
     check_include_files(wchar.h HAVE_WCHAR_H)
     check_include_files(fcntl.h HAVE_FCNTL_H)
-    
+
     set(BasicIncludes "")
     if (HAVE_STDIO_H)
         string(APPEND BasicIncludes "#include<stdio.h>\n")
     endif()
     if (HAVE_STDLIB_H)
         string(APPEND BasicIncludes "#include<stdlib.h>\n")
-    endif()  
+    endif()
     if (HAVE_STRING_H)
         string(APPEND BasicIncludes "#include<string.h>\n")
     endif()
@@ -257,7 +257,7 @@ macro(determine_system_extension)
     endif()
     if (HAVE_TIME_H)
         string(APPEND BasicIncludes "#include<time.h>\n")
-    endif()         
+    endif()
     if (HAVE_SYS_TYPES_H)
         string(APPEND BasicIncludes "#include<sys/types.h>\n")
     endif()
@@ -274,118 +274,118 @@ macro(determine_system_extension)
     set(old_DetermineSystemExtension_CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS})
     set(SystemExtensionsDefines "")
     set(CMAKE_REQUIRED_DEFINITIONS "")
-    
+
     determine_x_open_source("${BasicIncludes}" _XOPEN_SOURCE)
     if (_XOPEN_SOURCE)
         list(APPEND SystemExtensionsDefines -D_XOPEN_SOURCE=${_XOPEN_SOURCE})
     endif()
-    
+
     # check if basic includes supports _GNU_SOURCE
     set(CMAKE_REQUIRED_DEFINITIONS ${SystemExtensionsDefines} -D_GNU_SOURCE)
-	check_c_source_compiles("
-	    ${BasicIncludes}
+    check_c_source_compiles("
+        ${BasicIncludes}
 
         int main()
         {
           return 0;
         }
 
-     	" _GNU_SOURCE
-	)
+        " _GNU_SOURCE
+    )
     if (_GNU_SOURCE)
         list(APPEND SystemExtensionsDefines -D_GNU_SOURCE)
-    endif() 
-       
+    endif()
+
     # check if basic includes supports _DARWIN_C_SOURCE for Apple
     check_symbol_exists(__APPLE__ "" IS_APPLE)
     if (IS_APPLE)
         set(CMAKE_REQUIRED_DEFINITIONS ${SystemExtensionsDefines} -D_DARWIN_C_SOURCE)
-    	check_c_source_compiles("
-    	    ${BasicIncludes}
-    
+        check_c_source_compiles("
+            ${BasicIncludes}
+
             int main()
             {
               return 0;
             }
-    
-         	" _DARWIN_C_SOURCE
-    	)
+
+            " _DARWIN_C_SOURCE
+        )
         if (_DARWIN_C_SOURCE)
             list(APPEND SystemExtensionsDefines -D_DARWIN_C_SOURCE)
         endif()
-    endif()            
-    
+    endif()
+
     # check if basic includes supports __EXTENSIONS__ for Sun
     check_symbol_exists(__sun "" IS_SUN)
     if (IS_SUN)
         set(CMAKE_REQUIRED_DEFINITIONS ${SystemExtensionsDefines} -D__EXTENSIONS__)
-    	check_c_source_compiles("
-    	    ${BasicIncludes}
-    
+        check_c_source_compiles("
+            ${BasicIncludes}
+
             int main()
             {
               return 0;
             }
-    
-         	" __EXTENSIONS__
-    	)
+
+            " __EXTENSIONS__
+        )
         if (__EXTENSIONS__)
             list(APPEND SystemExtensionsDefines -D__EXTENSIONS__)
         endif()
     endif()
-        
+
     # check if basic includes supports _NETBSD_SOURCE for NetBSD
     check_symbol_exists(__NetBSD__ "" IS_NetBSD)
     if (IS_NetBSD)
         set(CMAKE_REQUIRED_DEFINITIONS ${SystemExtensionsDefines} -D_NETBSD_SOURCE)
-    	check_c_source_compiles("
-    	    ${BasicIncludes}
-    
+        check_c_source_compiles("
+            ${BasicIncludes}
+
             int main()
             {
               return 0;
             }
-    
-         	" _NETBSD_SOURCE
-    	)
+
+            " _NETBSD_SOURCE
+        )
         if (_NETBSD_SOURCE)
             list(APPEND SystemExtensionsDefines -D_NETBSD_SOURCE)
         endif()
-    endif()    
-    
+    endif()
+
     # check if basic includes supports _BSD_SOURCE for OpenBSD
     check_symbol_exists(__OpenBSD__ "" IS_OpenBSD)
     if (IS_OpenBSD)
         set(CMAKE_REQUIRED_DEFINITIONS ${SystemExtensionsDefines} -D_BSD_SOURCE)
-    	check_c_source_compiles("
-    	    ${BasicIncludes}
-    
+        check_c_source_compiles("
+            ${BasicIncludes}
+
             int main()
             {
               return 0;
             }
-    
-         	" _BSD_SOURCE
-    	)
+
+            " _BSD_SOURCE
+        )
         if (_BSD_SOURCE)
             list(APPEND SystemExtensionsDefines -D_BSD_SOURCE)
         endif()
     endif()
-    
+
     # check if basic includes supports _TANDEM_SOURCE for NonStop OS
     check_symbol_exists(__TANDEM "" IS_TANDEM)
     if (IS_TANDEM)
         set(CMAKE_REQUIRED_DEFINITIONS ${SystemExtensionsDefines} -D_TANDEM_SOURCE)
-    	check_c_source_compiles("
-    	    ${BasicIncludes}
-    
+        check_c_source_compiles("
+            ${BasicIncludes}
+
             int main()
             {
               return 0;
             }
-    
-         	" _TANDEM_SOURCE
-    	)
+
+            " _TANDEM_SOURCE
+        )
         if (_TANDEM_SOURCE)
             list(APPEND SystemExtensionsDefines -D_TANDEM_SOURCE)
         endif()
@@ -396,20 +396,20 @@ macro(determine_system_extension)
     check_symbol_exists(__INTERIX "" IS_INTERIX)
     if (__INTERIX OR __TOS_MVS__)
         set(CMAKE_REQUIRED_DEFINITIONS ${SystemExtensionsDefines} -D_ALL_SOURCE)
-    	check_c_source_compiles("
-    	    ${BasicIncludes}
-    
+        check_c_source_compiles("
+            ${BasicIncludes}
+
             int main()
             {
               return 0;
             }
-    
-         	" _ALL_SOURCE
-    	)
+
+            " _ALL_SOURCE
+        )
         if (_ALL_SOURCE)
             list(APPEND SystemExtensionsDefines -D_ALL_SOURCE)
         endif()
     endif()
-            
+
     set(CMAKE_REQUIRED_DEFINITIONS ${old_DetermineSystemExtension_CMAKE_REQUIRED_DEFINITIONS})
 endmacro()

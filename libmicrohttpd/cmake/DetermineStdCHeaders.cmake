@@ -12,7 +12,7 @@ function(determine_std_c_headers result)
     check_symbol_exists(memchr "string.h" HAVE_memchr)
     check_symbol_exists(free "stdlib.h" HAVE_free)
 
-        
+
     if (HAVE_STDLIB_H AND HAVE_STDARG_H AND HAVE_STRING_H AND HAVE_FLOAT_H AND HAVE_memchr AND HAVE_free)
         if (NOT CMAKE_CROSSCOMPILING)
             check_c_source_runs("
@@ -23,12 +23,12 @@ function(determine_std_c_headers result)
                 # define TOUPPER(c) (ISLOWER(c) ? 'A' + ((c) - 'a') : (c))
                 #else
                 # define ISLOWER(c) \
-                		   (('a' <= (c) && (c) <= 'i') \
-                		     || ('j' <= (c) && (c) <= 'r') \
-                		     || ('s' <= (c) && (c) <= 'z'))
+                           (('a' <= (c) && (c) <= 'i') \
+                             || ('j' <= (c) && (c) <= 'r') \
+                             || ('s' <= (c) && (c) <= 'z'))
                 # define TOUPPER(c) (ISLOWER(c) ? ((c) | 0x40) : (c))
                 #endif
-                
+
                 #define XOR(e, f) (((e) && !(f)) || (!(e) && (f)))
                 int
                 main ()
@@ -36,7 +36,7 @@ function(determine_std_c_headers result)
                   int i;
                   for (i = 0; i < 256; i++)
                     if (XOR (islower (i), ISLOWER (i))
-                	|| toupper (i) != TOUPPER (i))
+                    || toupper (i) != TOUPPER (i))
                       return 2;
                   return 0;
                 } " STDC_SUPPORT_HIGH_BIT_CHARS)

@@ -23,7 +23,7 @@ macro(FindLibMagic)
     find_path(LibMagic_ROOT_DIR
         NAMES include/magic.h
     )
-    
+
     if (${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
         # the static version of the library is preferred on OS X for the
         # purposes of making packages (libmagic doesn't ship w/ OS X)
@@ -31,22 +31,22 @@ macro(FindLibMagic)
     else ()
         set(libmagic_names magic)
     endif ()
-    
+
     find_file(LibMagic_FILE_EXE
         NAMES file
         HINTS ${LibMagic_ROOT_DIR}/bin
     )
-    
+
     find_library(LibMagic_LIBRARY
         NAMES ${libmagic_names}
         HINTS ${LibMagic_ROOT_DIR}/lib
     )
-    
+
     find_path(LibMagic_INCLUDE_DIR
         NAMES magic.h
         HINTS ${LibMagic_ROOT_DIR}/include
     )
-    
+
     if (LibMagic_FILE_EXE)
         execute_process(COMMAND "${LibMagic_FILE_EXE}" --version
                         ERROR_VARIABLE  LibMagic_VERSION
@@ -57,7 +57,7 @@ macro(FindLibMagic)
     else ()
         set(LibMagic_VERSION NOTFOUND)
     endif ()
-    
+
     include(FindPackageHandleStandardArgs)
     find_package_handle_standard_args(LibMagic DEFAULT_MSG
         LibMagic_LIBRARY
@@ -65,7 +65,7 @@ macro(FindLibMagic)
         LibMagic_FILE_EXE
         LibMagic_VERSION
     )
-    
+
     mark_as_advanced(
         LibMagic_ROOT_DIR
         LibMagic_FILE_EXE
@@ -73,4 +73,4 @@ macro(FindLibMagic)
         LibMagic_LIBRARY
         LibMagic_INCLUDE_DIR
     )
-endmacro()    
+endmacro()

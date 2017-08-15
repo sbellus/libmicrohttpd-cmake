@@ -13,16 +13,16 @@
 
 macro(FindNSS)
     if(NSS_INCLUDE_DIRS AND NSS_LDFLAGS)
-    
+
     # in cache already
     SET(NSS_FOUND TRUE)
-    
+
     else()
       if(NOT WIN32)
         find_package(PkgConfig)
         pkg_search_module(NSS nss)
       endif(NOT WIN32)
-    
+
       if (NSS_FOUND)
         if (NOT Nss_FIND_QUIETLY)
           message(STATUS "Found NSS: ${NSS_LDFLAGS}")
@@ -32,8 +32,8 @@ macro(FindNSS)
           message(FATAL_ERROR "Could NOT find NSS")
         endif (Nss_FIND_REQUIRED)
       endif (NSS_FOUND)
-      
+
       mark_as_advanced(NSS_INCLUDE_DIRS NSS_LDFLAGS NSS_CFLAGS_OTHER NSS_VERSION)
-      
+
     endif()
 endmacro()

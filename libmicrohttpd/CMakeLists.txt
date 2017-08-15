@@ -4,7 +4,7 @@
 cmake_minimum_required(VERSION 3.1)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR})
- 
+
 include(CheckSymbolExists)
 include(CheckIncludeFiles)
 include(CheckCSourceCompiles)
@@ -44,22 +44,22 @@ elseif ("Linux" STREQUAL "${CMAKE_SYSTEM_NAME}")
     list(APPEND CMAKE_REQUIRED_LIBRARIES -lrt)
     set(LINUX 1)
 elseif ("NetBSD" STREQUAL "${CMAKE_SYSTEM_NAME}")
-    set(NETBSD 1)   
+    set(NETBSD 1)
 elseif ("OpenBSD" STREQUAL "${CMAKE_SYSTEM_NAME}")
-    set(OPENBSD 1)          
+    set(OPENBSD 1)
 elseif ("Darwin" STREQUAL "${CMAKE_SYSTEM_NAME}")
-    set(OSX 1)  
+    set(OSX 1)
 elseif ("SunOS" STREQUAL "${CMAKE_SYSTEM_NAME}")
     list(APPEND CMAKE_REQUIRED_DEFINITIONS -D_REENTRANT)
-    set(SOLARIS 1)      
+    set(SOLARIS 1)
 elseif ("BSD/OS" STREQUAL "${CMAKE_SYSTEM_NAME}")
-    set(SOMEBSD 1)      
+    set(SOMEBSD 1)
 elseif ("Windows" STREQUAL "${CMAKE_SYSTEM_NAME}")
-    set(WINDOWS 1)  
+    set(WINDOWS 1)
     list(APPEND CMAKE_REQUIRED_DEFINITIONS -D_CRT_SECURE_NO_DEPRECATE)
     list(APPEND CMAKE_REQUIRED_LIBRARIES Ws2_32.lib odbc32.lib odbccp32.lib)
 else()
-    set(OTHEROS 1)  
+    set(OTHEROS 1)
 endif()
 
 determine_system_extension()
@@ -71,24 +71,24 @@ if ("big" STREQUAL "${endianness}")
 endif()
 
 if (ENABLE_BAUTH)
-	set(BAUTH_SUPPORT 1)
+    set(BAUTH_SUPPORT 1)
 endif()
 if (ENABLE_DAUTH)
-	set(DAUTH_SUPPORT 1)
+    set(DAUTH_SUPPORT 1)
 endif()
 if (ENABLE_ERROR_MSGS)
-	set(HAVE_MESSAGES 1)
+    set(HAVE_MESSAGES 1)
 endif()
 if (ENABLE_POSTPROCESSOR)
-	set(HAVE_POSTPROCESSOR 1)
+    set(HAVE_POSTPROCESSOR 1)
 endif()
 if (ENABLE_UPGRADE)
-	set(UPGRADE_SUPPORT 1)
+    set(UPGRADE_SUPPORT 1)
 endif()
-	
+
 if (ENABLE_HTTPS)
-	set(HTTPS_SUPPORT 1)
-	set(MSG_HTTPS yes)
+    set(HTTPS_SUPPORT 1)
+    set(MSG_HTTPS yes)
     FindLibGCrypt()
     include(FindGnuTLS)
     set(HttpsMissingLibraries "")
@@ -97,8 +97,8 @@ if (ENABLE_HTTPS)
     endif()
     if (NOT LIBGCRYPT_FOUND)
         list(APPEND HttpsMissingLibraries libgcrypt)
-    endif() 
-    
+    endif()
+
     if (NOT "" STREQUAL "${HttpsMissingLibraries}")
         set(HTTPS_SUPPORT 0)
         set(MSG_HTTPS "no (lacking ${HttpsMissingLibraries})")
@@ -108,41 +108,41 @@ else()
 endif()
 
 if (ENABLE_EPOLL)
-	set(MSG_EPOLL yes)
-	check_symbol_exists(epoll_create "sys/epoll.h" EPOLL_SUPPORT)
-	check_symbol_exists(epoll_create1 "sys/epoll.h" HAVE_EPOLL_CREATE1)
-	if (NOT EPOLL_SUPPORT)
-		set(MSG_EPOLL "no (platform does not support epoll)")
-	endif()
-else()	
-	set(MSG_EPOLL "no (disabled)")
+    set(MSG_EPOLL yes)
+    check_symbol_exists(epoll_create "sys/epoll.h" EPOLL_SUPPORT)
+    check_symbol_exists(epoll_create1 "sys/epoll.h" HAVE_EPOLL_CREATE1)
+    if (NOT EPOLL_SUPPORT)
+        set(MSG_EPOLL "no (platform does not support epoll)")
+    endif()
+else()
+    set(MSG_EPOLL "no (disabled)")
 endif()
 
 if (ENABLE_POLL)
-	set(MSG_POLL yes)
-	if (WINDOWS)
-		check_c_source_compiles("
-			#include <winsock2.h>
+    set(MSG_POLL yes)
+    if (WINDOWS)
+        check_c_source_compiles("
+            #include <winsock2.h>
 
-			int main(int argc, char** argv)
-			{
-				WSAPOLLFD fda[2];
-				WSAPoll(fda, 2, 0);
-			 
-			  return 0;
-			}
-			" HAVE_POLL
-		)
-	else()
-		check_symbol_exists(poll "poll.h" HAVE_POLL)
-		check_include_files(poll.h HAVE_POLL_H)
-	endif()
-	
-	if (NOT HAVE_POLL)
-		set(MSG_POLL "no (platform does not support poll)")
-	endif()
-else()	
-	set(MSG_POLL "no (disabled)")
+            int main(int argc, char** argv)
+            {
+                WSAPOLLFD fda[2];
+                WSAPoll(fda, 2, 0);
+
+              return 0;
+            }
+            " HAVE_POLL
+        )
+    else()
+        check_symbol_exists(poll "poll.h" HAVE_POLL)
+        check_include_files(poll.h HAVE_POLL_H)
+    endif()
+
+    if (NOT HAVE_POLL)
+        set(MSG_POLL "no (platform does not support poll)")
+    endif()
+else()
+    set(MSG_POLL "no (disabled)")
 endif()
 
 if(APPLE AND CMAKE_OSX_ARCHITECTURES)
@@ -160,7 +160,7 @@ check_include_files(sys/types.h HAVE_SYS_TYPES_H)
 check_include_files(unistd.h HAVE_UNISTD_H)
 check_include_files(wchar.h HAVE_WCHAR_H)
 check_include_files(fcntl.h HAVE_FCNTL_H)
-	
+
 check_function_exists(accept4 HAVE_ACCEPT4)
 check_include_files(arpa/inet.h HAVE_ARPA_INET_H)
 if (WINDOWS)
@@ -173,8 +173,8 @@ check_c_source_compiles("
     {
       struct tm res;
       time_t t;
-      gmtime_s (&t, &res);  
-     
+      gmtime_s (&t, &res);
+
       return 0;
     }
     " HAVE_C11_GMTIME_S
@@ -186,8 +186,8 @@ check_c_source_compiles("
     {
       struct tm res;
       time_t t;
-      gmtime_s (&res, &t);  
-     
+      gmtime_s (&res, &t);
+
       return 0;
     }
     " HAVE_W32_GMTIME_S
@@ -207,7 +207,7 @@ endif()
 check_symbol_exists(SOCK_NONBLOCK sys/socket.h HAVE_DECL_SOCK_NONBLOCK)
 if (HAVE_DECL_SOCK_NONBLOCK)
     set(HAVE_SOCK_NONBLOCK 1)
-endif() 
+endif()
 check_include_files(stddef.h HAVE_STDDEF_H)
 check_include_files(dlfcn.h HAVE_DLFCN_H)
 check_include_files(endian.h HAVE_ENDIAN_H)
@@ -238,28 +238,28 @@ check_include_files(netinet/tcp.h HAVE_NETINET_TCP_H)
 check_include_files(net/if.h HAVE_NET_IF_H)
 set(old_CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS})
 if(HAVE_FCNTL_H)
-	list(APPEND CMAKE_REQUIRED_DEFINITIONS -DHAVE_FCNTL_H)
+    list(APPEND CMAKE_REQUIRED_DEFINITIONS -DHAVE_FCNTL_H)
 endif()
 if(HAVE_UNISTD_H)
-	list(APPEND CMAKE_REQUIRED_DEFINITIONS -DHAVE_UNISTD_H)
+    list(APPEND CMAKE_REQUIRED_DEFINITIONS -DHAVE_UNISTD_H)
 endif()
 check_c_source_compiles("
-	#ifdef HAVE_FCNTL_H
-	#include <fcntl.h>
-	#endif
-	#ifdef HAVE_UNISTD_H
-	#include <unistd.h>
-	#endif
-	
-	int main(int argc, char** argv)
-	{
-		int arr[2];
-		int res;
-		res = pipe2(arr, O_CLOEXEC | O_NONBLOCK);
-	 
-		return 0;
-	}
-	" HAVE_PIPE2_FUNC
+    #ifdef HAVE_FCNTL_H
+    #include <fcntl.h>
+    #endif
+    #ifdef HAVE_UNISTD_H
+    #include <unistd.h>
+    #endif
+
+    int main(int argc, char** argv)
+    {
+        int arr[2];
+        int res;
+        res = pipe2(arr, O_CLOEXEC | O_NONBLOCK);
+
+        return 0;
+    }
+    " HAVE_PIPE2_FUNC
 )
 set(CMAKE_REQUIRED_DEFINITIONS ${old_CMAKE_REQUIRED_DEFINITIONS})
 check_symbol_exists(pipe "unistd.h" HAVE_PIPE_FUNC)
@@ -280,124 +280,124 @@ else()
 endif()
 
 if (DISABLE_THREAD_NAMES)
-	set(MHD_NO_THREAD_NAMES 1)
-	set(MSG_THREAD_NAMES "no (disbaled)")
+    set(MHD_NO_THREAD_NAMES 1)
+    set(MSG_THREAD_NAMES "no (disbaled)")
 else()
-	set(MSG_THREAD_NAMES "yes")	
+    set(MSG_THREAD_NAMES "yes")
 endif()
 if (NOT HAVE_PTHREAD_H AND NOT DISABLE_THREAD_NAMES)
-	set(MHD_NO_THREAD_NAMES 1)
-	set(MSG_THREAD_NAMES "no (not supported by platform)")	
+    set(MHD_NO_THREAD_NAMES 1)
+    set(MSG_THREAD_NAMES "no (not supported by platform)")
 elseif (HAVE_PTHREAD_H AND NOT DISABLE_THREAD_NAMES)
-	set(old_CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS})
-	if(HAVE_PTHREAD_NP_H)
-		list(APPEND CMAKE_REQUIRED_DEFINITIONS -DHAVE_PTHREAD_NP_H)
-	endif()
-	check_c_source_compiles("
-		#include <pthread.h>
-		#ifdef HAVE_PTHREAD_NP_H
-		#include <pthread_np.h>
-		#endif
-		
-		int main(int argc, char** argv)
-		{
-			pthread_attr_t thr_attr;
-			pthread_attr_init(&thr_attr);
-			pthread_attr_setname_np(&thr_attr, \"name\", 0);
-			pthread_attr_destroy(&thr_attr);
-		 
-			return 0;
-		}
-		" HAVE_PTHREAD_ATTR_SETNAME_NP_NETBSD
-	)
-	check_c_source_compiles("
-		#include <pthread.h>
-		#ifdef HAVE_PTHREAD_NP_H
-		#include <pthread_np.h>
-		#endif
-		
-		int main(int argc, char** argv)
-		{
-			pthread_attr_t thr_attr;
-			pthread_attr_init(&thr_attr);
-			pthread_attr_setname_np(&thr_attr, \"name\");
-			pthread_attr_destroy(&thr_attr);
-		 
-			return 0;
-		}
-		" HAVE_PTHREAD_ATTR_SETNAME_NP_IBMI
-	)
+    set(old_CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS})
+    if(HAVE_PTHREAD_NP_H)
+        list(APPEND CMAKE_REQUIRED_DEFINITIONS -DHAVE_PTHREAD_NP_H)
+    endif()
+    check_c_source_compiles("
+        #include <pthread.h>
+        #ifdef HAVE_PTHREAD_NP_H
+        #include <pthread_np.h>
+        #endif
 
-	check_c_source_compiles("
-		#include <pthread.h>
-		#ifdef HAVE_PTHREAD_NP_H
-		#include <pthread_np.h>
-		#endif
-		
-		int main(int argc, char** argv)
-		{
-			int res = pthread_setname_np(pthread_self(), \"name\", 0);
-		 
-			return 0;
-		}
-		" HAVE_PTHREAD_SETNAME_NP_NETBSD
-	)
-	check_c_source_compiles("
-		#include <pthread.h>
-		#ifdef HAVE_PTHREAD_NP_H
-		#include <pthread_np.h>
-		#endif
-		
-		int main(int argc, char** argv)
-		{
-			int res = pthread_setname_np(pthread_self(), \"name\");
-		 
-			return 0;
-		}
-		" HAVE_PTHREAD_SETNAME_NP_GNU
-	)	
-	check_c_source_compiles("
-		#include <pthread.h>
-		#ifdef HAVE_PTHREAD_NP_H
-		#include <pthread_np.h>
-		#endif
-		
-		int main(int argc, char** argv)
-		{
-			int res = pthread_setname_np(\"name\");
-		 
-			return 0;
-		}
-		" HAVE_PTHREAD_SETNAME_NP_DARWIN
-	)		
-	check_c_source_compiles("
-		#include <pthread.h>
-		#ifdef HAVE_PTHREAD_NP_H
-		#include <pthread_np.h>
-		#endif
-		
-		int main(int argc, char** argv)
-		{
-			pthread_set_name_np(pthread_self(), \"name\");
-		 
-			return 0;
-		}
-		" HAVE_PTHREAD_SET_NAME_NP_FREEBSD
-	)		
-	
-	if (NOT (HAVE_PTHREAD_ATTR_SETNAME_NP_NETBSD OR HAVE_PTHREAD_ATTR_SETNAME_NP_IBMI OR HAVE_PTHREAD_SETNAME_NP_GNU OR HAVE_PTHREAD_SET_NAME_NP_FREEBSD OR HAVE_PTHREAD_SETNAME_NP_DARWIN OR HAVE_PTHREAD_SETNAME_NP_NETBSD))
-		# thread names not supported by platform
-		set(MHD_NO_THREAD_NAMES 1)
-		set(MSG_THREAD_NAMES "no (not supported by platform)")
-	else()
-		set(MSG_THREAD_NAMES "yes")
-	endif()
+        int main(int argc, char** argv)
+        {
+            pthread_attr_t thr_attr;
+            pthread_attr_init(&thr_attr);
+            pthread_attr_setname_np(&thr_attr, \"name\", 0);
+            pthread_attr_destroy(&thr_attr);
 
-	set(CMAKE_REQUIRED_DEFINITIONS ${old_CMAKE_REQUIRED_DEFINITIONS})
+            return 0;
+        }
+        " HAVE_PTHREAD_ATTR_SETNAME_NP_NETBSD
+    )
+    check_c_source_compiles("
+        #include <pthread.h>
+        #ifdef HAVE_PTHREAD_NP_H
+        #include <pthread_np.h>
+        #endif
+
+        int main(int argc, char** argv)
+        {
+            pthread_attr_t thr_attr;
+            pthread_attr_init(&thr_attr);
+            pthread_attr_setname_np(&thr_attr, \"name\");
+            pthread_attr_destroy(&thr_attr);
+
+            return 0;
+        }
+        " HAVE_PTHREAD_ATTR_SETNAME_NP_IBMI
+    )
+
+    check_c_source_compiles("
+        #include <pthread.h>
+        #ifdef HAVE_PTHREAD_NP_H
+        #include <pthread_np.h>
+        #endif
+
+        int main(int argc, char** argv)
+        {
+            int res = pthread_setname_np(pthread_self(), \"name\", 0);
+
+            return 0;
+        }
+        " HAVE_PTHREAD_SETNAME_NP_NETBSD
+    )
+    check_c_source_compiles("
+        #include <pthread.h>
+        #ifdef HAVE_PTHREAD_NP_H
+        #include <pthread_np.h>
+        #endif
+
+        int main(int argc, char** argv)
+        {
+            int res = pthread_setname_np(pthread_self(), \"name\");
+
+            return 0;
+        }
+        " HAVE_PTHREAD_SETNAME_NP_GNU
+    )
+    check_c_source_compiles("
+        #include <pthread.h>
+        #ifdef HAVE_PTHREAD_NP_H
+        #include <pthread_np.h>
+        #endif
+
+        int main(int argc, char** argv)
+        {
+            int res = pthread_setname_np(\"name\");
+
+            return 0;
+        }
+        " HAVE_PTHREAD_SETNAME_NP_DARWIN
+    )
+    check_c_source_compiles("
+        #include <pthread.h>
+        #ifdef HAVE_PTHREAD_NP_H
+        #include <pthread_np.h>
+        #endif
+
+        int main(int argc, char** argv)
+        {
+            pthread_set_name_np(pthread_self(), \"name\");
+
+            return 0;
+        }
+        " HAVE_PTHREAD_SET_NAME_NP_FREEBSD
+    )
+
+    if (NOT (HAVE_PTHREAD_ATTR_SETNAME_NP_NETBSD OR HAVE_PTHREAD_ATTR_SETNAME_NP_IBMI OR HAVE_PTHREAD_SETNAME_NP_GNU OR HAVE_PTHREAD_SET_NAME_NP_FREEBSD OR HAVE_PTHREAD_SETNAME_NP_DARWIN OR HAVE_PTHREAD_SETNAME_NP_NETBSD))
+        # thread names not supported by platform
+        set(MHD_NO_THREAD_NAMES 1)
+        set(MSG_THREAD_NAMES "no (not supported by platform)")
+    else()
+        set(MSG_THREAD_NAMES "yes")
+    endif()
+
+    set(CMAKE_REQUIRED_DEFINITIONS ${old_CMAKE_REQUIRED_DEFINITIONS})
 endif()
 
 check_c_source_compiles("
-#include <pthread.h> 
+#include <pthread.h>
 int main(int argc, char** argv)
 {
   static int i = PTHREAD_PRIO_INHERIT;
@@ -419,7 +419,7 @@ check_symbol_exists(snprintf "stdio.h" HAVE_SNPRINTF)
 check_struct_has_member("struct sockaddr_in" sin_len netinet/in.h HAVE_SOCKADDR_IN_SIN_LEN)
 check_include_files(sockLib.h HAVE_SOCKLIB_H)
 check_c_source_compiles("
-#include <stdbool.h> 
+#include <stdbool.h>
 int main(int argc, char** argv)
 {
   static bool b;
@@ -429,7 +429,7 @@ int main(int argc, char** argv)
 if (NOT HAVE_STDBOOL_H)
     set(bool "int")
     set(false "(0)")
-    set(true "(!0)")    
+    set(true "(!0)")
 else()
     set(HAVE_REAL_BOOL 1)
 endif()
@@ -463,7 +463,7 @@ foreach(PossibleInline ${PossibleInlines})
     check_c_source_compiles("
         static ${PossibleInline} int sumfn(int x, int y)
             { return x + y; }
-            
+
         int main(int argc, char** argv)
             {
             int i = sumfn(1,2);
@@ -478,7 +478,7 @@ foreach(PossibleInline ${PossibleInlines})
 endforeach()
 if (CMAKE_COMPILER_IS_GNUCC AND CMAKE_C_COMPILER_VERSION VERSION_GREATER "4.2")
     check_c_compiler_flag(-fvisibility=hidden HAVE_OPTION_VISIBILITY)
-endif()    
+endif()
 if(HAVE_OPTION_VISIBILITY)
     set(_MHD_EXTERN "__attribute__((visibility(\"default\"))) extern")
 elseif(WINDOWS)
@@ -500,7 +500,7 @@ if (CURL_FOUND)
     set(MHD_REQ_CURL_OPENSSL_VERSION "0.9.8") # required cURL SSL version to run tests
     set(MHD_REQ_CURL_GNUTLS_VERSION "2.8.6") # gnuTLS lib version - used in conjunction with cURL
     set(MHD_REQ_CURL_NSS_VERSION "3.12.0") # NSS lib version - used in conjunction with cURL
-  
+
     set(HAVE_LIBCURL 1)
     find_program(CURL_CONFIG curl-config)
     if (CURL_CONFIG)
@@ -515,7 +515,7 @@ if (CURL_FOUND)
         foreach(p ${ps})
             string(TOUPPER "${p}" p)
             set(LIBCURL_PROTOCOL_${p} 1)
-        endforeach()		
+        endforeach()
     endif()
 else()
     set(MSG_CURL "no, many unit tests will not run")
@@ -534,37 +534,37 @@ determine_std_c_headers(STDC_HEADERS)
 
 set(AvailableInterPorcessCommunication "")
 if (WINDOWS)
-	list(APPEND AvailableInterPorcessCommunication socketpair)
+    list(APPEND AvailableInterPorcessCommunication socketpair)
 else()
-	if (HAVE_SYS_EVENTFD_H AND HAVE_EVENTFD_FUNCTION)
-		list(APPEND AvailableInterPorcessCommunication eventfd)
-	endif()
-	if (HAVE_PIPE2_FUNC OR HAVE_PIPE_FUNC)
-		list(APPEND AvailableInterPorcessCommunication pipe)
-	endif()
-	if (HAVE_SOCKETPAIR_FUNC)
-		list(APPEND AvailableInterPorcessCommunication socketpair)
-	endif()
-endif()	
+    if (HAVE_SYS_EVENTFD_H AND HAVE_EVENTFD_FUNCTION)
+        list(APPEND AvailableInterPorcessCommunication eventfd)
+    endif()
+    if (HAVE_PIPE2_FUNC OR HAVE_PIPE_FUNC)
+        list(APPEND AvailableInterPorcessCommunication pipe)
+    endif()
+    if (HAVE_SOCKETPAIR_FUNC)
+        list(APPEND AvailableInterPorcessCommunication socketpair)
+    endif()
+endif()
 if ("" STREQUAL "${AvailableInterPorcessCommunication}")
-	message(FATAL_ERROR "cannot find useable type of inter-thread communication")
+    message(FATAL_ERROR "cannot find useable type of inter-thread communication")
 endif()
 
 if ("auto" STREQUAL "${MHD_ITC}")
-	list(GET AvailableInterPorcessCommunication 0 MHD_ITC)
+    list(GET AvailableInterPorcessCommunication 0 MHD_ITC)
 else()
-	list(FIND AvailableInterPorcessCommunication "${MHD_ITC}" ITC_INDEX)
-	if (ITC_INDEX GREATER -1)
-		# it is already correctly set
-	else()
-		message(FATAL_ERROR "Requested ${MHD_ITC} inter-thread communication is not available (try auto). Available are [${AvailableInterPorcessCommunication}].")
-	endif()
+    list(FIND AvailableInterPorcessCommunication "${MHD_ITC}" ITC_INDEX)
+    if (ITC_INDEX GREATER -1)
+        # it is already correctly set
+    else()
+        message(FATAL_ERROR "Requested ${MHD_ITC} inter-thread communication is not available (try auto). Available are [${AvailableInterPorcessCommunication}].")
+    endif()
 endif()
-	
+
 if("pipe" STREQUAL "${MHD_ITC}")
     set(_MHD_ITC_PIPE 1)
 elseif("eventfd" STREQUAL "${MHD_ITC}")
-	set(_MHD_ITC_EVENTFD 1)
+    set(_MHD_ITC_EVENTFD 1)
 elseif("socketpair" STREQUAL "${MHD_ITC}")
     set(_MHD_ITC_SOCKETPAIR 1)
 else()
@@ -903,54 +903,54 @@ else()
 
           return res;
         }
-        ]=] HAVE_LISTEN_SHUTDOWN)   
+        ]=] HAVE_LISTEN_SHUTDOWN)
 
         set(CMAKE_REQUIRED_DEFINITIONS ${old_CMAKE_REQUIRED_DEFINITIONS})
 endif()
 if (HAVE_LISTEN_SHUTDOWN)
-	set(MSG_LISTEN_SHUTDOWN yes)
+    set(MSG_LISTEN_SHUTDOWN yes)
 else()
-	set(MSG_LISTEN_SHUTDOWN no)
+    set(MSG_LISTEN_SHUTDOWN no)
 endif()
 
 set(old_CMAKE_REQUIRED_DEFINITIONS ${CMAKE_REQUIRED_DEFINITIONS})
 if(HAVE_NETINET_IN_H)
-	list(APPEND CMAKE_REQUIRED_DEFINITIONS -DHAVE_NETINET_IN_H)
+    list(APPEND CMAKE_REQUIRED_DEFINITIONS -DHAVE_NETINET_IN_H)
 endif()
 if(HAVE_SYS_SOCKET_H)
-	list(APPEND CMAKE_REQUIRED_DEFINITIONS -DHAVE_SYS_SOCKET_H)
+    list(APPEND CMAKE_REQUIRED_DEFINITIONS -DHAVE_SYS_SOCKET_H)
 endif()
 if(HAVE_WINSOCK2_H)
-	list(APPEND CMAKE_REQUIRED_DEFINITIONS -DHAVE_WINSOCK2_H)
+    list(APPEND CMAKE_REQUIRED_DEFINITIONS -DHAVE_WINSOCK2_H)
 endif()
 if(HAVE_WS2TCPIP_H)
-	list(APPEND CMAKE_REQUIRED_DEFINITIONS -DHAVE_WS2TCPIP_H)
+    list(APPEND CMAKE_REQUIRED_DEFINITIONS -DHAVE_WS2TCPIP_H)
 endif()
 check_c_source_compiles("
-	#include <stdio.h>
-	#if HAVE_NETINET_IN_H
-	#include <netinet/in.h>
-	#endif
-	#if HAVE_SYS_SOCKET_H
-	#include <sys/socket.h>
-	#endif
-	#if HAVE_WINSOCK2_H
-	#include <winsock2.h>
-	#endif
-	#if HAVE_WS2TCPIP_H
-	#include <ws2tcpip.h>
-	#endif
+    #include <stdio.h>
+    #if HAVE_NETINET_IN_H
+    #include <netinet/in.h>
+    #endif
+    #if HAVE_SYS_SOCKET_H
+    #include <sys/socket.h>
+    #endif
+    #if HAVE_WINSOCK2_H
+    #include <winsock2.h>
+    #endif
+    #if HAVE_WS2TCPIP_H
+    #include <ws2tcpip.h>
+    #endif
 
-	int main(int argc, char** argv)
-	{
-		int af=AF_INET6;
-		int pf=PF_INET6;
-		struct sockaddr_in6 sa;
-		printf(\"%d %d %p\\\\n\", af, pf, &sa);
-	 
-		return 0;
-	}
-	" HAVE_INET6
+    int main(int argc, char** argv)
+    {
+        int af=AF_INET6;
+        int pf=PF_INET6;
+        struct sockaddr_in6 sa;
+        printf(\"%d %d %p\\\\n\", af, pf, &sa);
+
+        return 0;
+    }
+    " HAVE_INET6
 )
 
 if (WINDOWS)
@@ -973,11 +973,11 @@ if (WINDOWS)
     endmacro(get_WIN32_WINNT)
 
     get_WIN32_WINNT(_WIN32_WINNT)
-	# fixing wrong conditionals in code that check system version instead of compiler version.
-	# E.g. It is not possible to compile with MSVC 2005 on Windows 7.
-	if (${MSVC_VERSION} LESS 1500)
-		set(_WIN32_WINNT 0x501)
-	endif()
+    # fixing wrong conditionals in code that check system version instead of compiler version.
+    # E.g. It is not possible to compile with MSVC 2005 on Windows 7.
+    if (${MSVC_VERSION} LESS 1500)
+        set(_WIN32_WINNT 0x501)
+    endif()
 endif()
 
 set(CMAKE_REQUIRED_DEFINITIONS ${old_CMAKE_REQUIRED_DEFINITIONS})
@@ -1034,10 +1034,10 @@ endif()
 
 set_target_properties(microhttpd
     PROPERTIES
-	    # create *nix style library versions + symbolic links
-	    VERSION ${major}.${minor}.${micro}
-	    SOVERSION ${major}
-	    INSTALL_RPATH ""
+        # create *nix style library versions + symbolic links
+        VERSION ${major}.${minor}.${micro}
+        SOVERSION ${major}
+        INSTALL_RPATH ""
 )
 target_include_directories(microhttpd PRIVATE src/microhttpd src/include ${CMAKE_BINARY_DIR})
 target_compile_definitions(microhttpd PRIVATE ${CMAKE_REQUIRED_DEFINITIONS})
@@ -1062,7 +1062,7 @@ install(TARGETS microhttpd
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib NAMELINK_SKIP
     ARCHIVE DESTINATION lib)
-install(EXPORT ${PROJECT_NAME} NAMESPACE mirohttpd DESTINATION lib/${PROJECT_NAME})    
+install(EXPORT ${PROJECT_NAME} NAMESPACE mirohttpd DESTINATION lib/${PROJECT_NAME})
 install(DIRECTORY ${PROJECT_SOURCE_DIR}/src/include DESTINATION include PATTERN *.h PERMISSIONS OWNER_READ GROUP_READ)
 
 if (ENABLE_TESTS)
@@ -1076,9 +1076,9 @@ if (ENABLE_DOC)
 endif()
 
 if (CMAKE_CROSSCOMPILING)
-	set(MSG_CROSSCOMPILING yes)
+    set(MSG_CROSSCOMPILING yes)
 else()
-	set(MSG_CROSSCOMPILING no)	
+    set(MSG_CROSSCOMPILING no)
 endif()
 
 message(
@@ -1104,4 +1104,4 @@ message(
   build examples:    ${ENABLE_EXAMPLES}
   build tests:       ${ENABLE_TESTS}"
  )
- 
+

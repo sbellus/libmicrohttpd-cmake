@@ -71,8 +71,8 @@ function(determine_target_endianness output_var)
     if(DEFINED CMAKE_REQUIRED_DEFINITIONS)
         string(REPLACE ";" " " crd ${CMAKE_REQUIRED_DEFINITIONS})
         list(APPEND configurationArgs "-DCMAKE_REQUIRED_DEFINITIONS=${crd}")
-    endif()                
-    
+    endif()
+
     try_compile(
         run_result_unused
         "${CMAKE_BINARY_DIR}"

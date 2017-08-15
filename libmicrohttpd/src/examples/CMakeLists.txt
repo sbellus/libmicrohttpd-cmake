@@ -55,12 +55,12 @@ endif()
 if (HAVE_POSTPROCESSOR)
     add_executable(post_example post_example.c)
     target_link_libraries(post_example microhttpd)
-    
+
     FindLibMagic()
     if (LIBMAGIC_FOUND)
         add_executable(demo demo.c)
         target_link_libraries(demo microhttpd  ${LibMagic_LIBRARY})
-        
+
         add_executable(demo_https demo_https.c)
         target_link_libraries(demo_https microhttpd ${LibMagic_LIBRARY})
     endif()
@@ -75,7 +75,7 @@ if (ENABLE_BAUTH)
     add_executable(authorization_example authorization_example.c)
     target_link_libraries(authorization_example microhttpd)
 endif()
-    
+
 if (ENABLE_UPGRADE)
     add_executable(upgrade_example upgrade_example.c)
     target_link_libraries(upgrade_example microhttpd)

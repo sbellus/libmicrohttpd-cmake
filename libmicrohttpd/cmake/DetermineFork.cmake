@@ -18,8 +18,8 @@ macro(determine_fork)
     if (HAVE_UNISTD_H)
         list(APPEND CMAKE_REQUIRED_DEFINITIONS -DHAVE_UNISTD_H)
     endif()
-    
-	check_c_source_compiles("
+
+    check_c_source_compiles("
         #ifdef HAVE_SYS_TYPES_H
         #include <sys/types.h>
         #endif
@@ -27,18 +27,18 @@ macro(determine_fork)
         #include <unistd.h>
         #endif
 
-		int main(int argc, char** argv)
-		{
+        int main(int argc, char** argv)
+        {
           pid_t p = fork ();
           if (0 == p) return 1;
-		 
-		  return 0;
-		}
-		" HAVE_FORK
-	)
-	
-	if (HAVE_FORK)
-    	check_c_source_compiles("
+
+          return 0;
+        }
+        " HAVE_FORK
+    )
+
+    if (HAVE_FORK)
+        check_c_source_compiles("
             #ifdef HAVE_SYS_TYPES_H
             #include <sys/types.h>
             #endif
@@ -46,19 +46,19 @@ macro(determine_fork)
             #include <unistd.h>
             #endif
             #include <sys/wait.h>
-    
-    		int main(int argc, char** argv)
-    		{
+
+            int main(int argc, char** argv)
+            {
               pid_t p = fork ();
               if (0 == p) return 1;
-    		  
-    		  waitpid (p, (void*)0, 0);
-    		  
-    		  return 0;
-    		}
-    		" HAVE_FORK_WAITPID
-    	)	
-	endif()
-        
+
+              waitpid (p, (void*)0, 0);
+
+              return 0;
+            }
+            " HAVE_FORK_WAITPID
+        )
+    endif()
+
     set(CMAKE_REQUIRED_DEFINITIONS ${old_determine_fork_CMAKE_REQUIRED_DEFINITIONS})
 endmacro()

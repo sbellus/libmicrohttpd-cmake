@@ -132,11 +132,11 @@ if (CMAKE_USE_PTHREADS_INIT)
     add_executable(test_quiesce test_quiesce.c)
     target_link_libraries(test_quiesce microhttpd Threads::Threads ${CURL_LIBRARIES})
     add_test(NAME quiesce COMMAND test_quiesce)
-    
+
     add_executable(test_concurrent_stop test_concurrent_stop.c)
     target_link_libraries(test_concurrent_stop microhttpd Threads::Threads ${CURL_LIBRARIES})
-    add_test(NAME concurrent_stop COMMAND test_concurrent_stop)    
-    
+    add_test(NAME concurrent_stop COMMAND test_concurrent_stop)
+
     add_executable(perf_get_concurrent perf_get_concurrent.c)
     target_link_libraries(perf_get_concurrent microhttpd Threads::Threads ${CURL_LIBRARIES})
     add_test(NAME perf_get_concurrent COMMAND perf_get_concurrent)
@@ -150,25 +150,25 @@ endif()
 
 if (HAVE_POSTPROCESSOR)
     add_executable(test_post test_post.c)
-    target_link_libraries(test_post microhttpd ${CURL_LIBRARIES}) 
+    target_link_libraries(test_post microhttpd ${CURL_LIBRARIES})
     add_test(NAME post COMMAND test_post)
-    
+
     add_executable(test_postform test_postform.c)
     target_link_libraries(test_postform microhttpd ${CURL_LIBRARIES})
-    add_test(NAME postform COMMAND test_postform)    
-    
+    add_test(NAME postform COMMAND test_postform)
+
     add_executable(test_post_loop test_post_loop.c)
     target_link_libraries(test_post_loop microhttpd ${CURL_LIBRARIES})
     add_test(NAME post_loop COMMAND test_post_loop)
-    
+
     add_executable(test_post11 test_post.c)
     target_link_libraries(test_post11 microhttpd ${CURL_LIBRARIES})
     add_test(NAME post11 COMMAND test_post11)
-    
+
     add_executable(test_postform11 test_postform.c)
     target_link_libraries(test_postform11 microhttpd ${CURL_LIBRARIES})
     add_test(NAME postform11 COMMAND test_postform11)
-    
+
     add_executable(test_post_loop11 test_post_loop.c)
     target_link_libraries(test_post_loop11 microhttpd ${CURL_LIBRARIES})
     add_test(NAME post_loop11 COMMAND test_post_loop11)
@@ -177,7 +177,7 @@ endif()
 add_executable(test_options test_options.c)
 target_link_libraries(test_options microhttpd)
 add_test(NAME options COMMAND test_options)
-    
+
 if (ENABLE_DAUTH)
     add_executable(test_digestauth_with_arguments test_digestauth_with_arguments.c)
     target_link_libraries(test_digestauth_with_arguments microhttpd ${CURL_LIBRARIES})
