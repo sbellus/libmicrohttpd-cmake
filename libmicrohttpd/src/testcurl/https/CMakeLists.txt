@@ -34,6 +34,10 @@ if (CMAKE_USE_PTHREADS_INIT)
     add_executable(test_https_get_parallel test_https_get_parallel.c tls_test_common.c)
     target_link_libraries(test_https_get_parallel microhttpd libcurl_version_check ${GNUTLS_LIBRARIES} ${CURL_LIBRARIES})
     add_test(NAME https_get_parallel COMMAND test_https_get_parallel)
+    
+    add_executable(test_https_get_parallel_threads test_https_get_parallel_threads.c tls_test_common.c)
+    target_link_libraries(test_https_get_parallel_threads microhttpd libcurl_version_check ${GNUTLS_LIBRARIES} ${CURL_LIBRARIES} Threads::Threads)
+    add_test(NAME https_get_parallel_threads COMMAND test_https_get_parallel_threads)
 endif()
 
 add_executable(test_tls_options test_tls_options.c tls_test_common.c)

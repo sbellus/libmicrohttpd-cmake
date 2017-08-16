@@ -176,6 +176,10 @@ target_link_libraries(test_options microhttpd)
 add_test(NAME options COMMAND test_options)
 
 if (ENABLE_DAUTH)
+    add_executable(test_digestauth test_digestauth.c)
+    target_link_libraries(test_digestauth microhttpd ${CURL_LIBRARIES})
+    add_test(NAME digestauth COMMAND test_digestauth)
+    
     add_executable(test_digestauth_with_arguments test_digestauth_with_arguments.c)
     target_link_libraries(test_digestauth_with_arguments microhttpd ${CURL_LIBRARIES})
     add_test(NAME digestauth_with_arguments COMMAND test_digestauth_with_arguments)
