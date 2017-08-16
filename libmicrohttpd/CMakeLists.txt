@@ -983,87 +983,17 @@ endif()
 set(CMAKE_REQUIRED_DEFINITIONS ${old_CMAKE_REQUIRED_DEFINITIONS})
 
 configure_file(MHD_config_cmake.h.in MHD_config.h)
+install(FILES MHD_config.h DESTINATION include/microhttpd PERMISSIONS OWNER_READ GROUP_READ)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 
-get_property(isSharedLibSupported GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS)
-
-if(isSharedLibSupported)
-    set(libraryType SHARED)
-else()
-    set(libraryType STATIC)
+if (ENABLE_TESTS)
+    enable_testing()
 endif()
 
-add_library(microhttpd ${libraryType}
-        src/microhttpd/connection.c
-        src/microhttpd/reason_phrase.c
-        src/microhttpd/daemon.c
-        src/microhttpd/internal.c
-        src/microhttpd/memorypool.c
-        src/microhttpd/mhd_mono_clock.c
-        src/microhttpd/sysfdsetsize.c
-        src/microhttpd/mhd_str.c
-        src/microhttpd/mhd_threads.c
-        src/microhttpd/mhd_sockets.c
-        src/microhttpd/mhd_itc.c
-        src/microhttpd/mhd_compat.c
-        src/microhttpd/response.c
-)
-
-if(NOT HAVE_SEARCH_H)
-    target_sources(microhttpd PRIVATE src/microhttpd/tsearch.c)
-endif()
-
-if(HAVE_POSTPROCESSOR)
-    target_sources(microhttpd PRIVATE src/microhttpd/postprocessor.c)
-endif()
-
-if(DAUTH_SUPPORT)
-    target_sources(microhttpd PRIVATE src/microhttpd/digestauth.c src/microhttpd/md5.c)
-endif()
-
-if(BAUTH_SUPPORT)
-    target_sources(microhttpd PRIVATE src/microhttpd/basicauth.c src/microhttpd/base64.c)
-endif()
-
-if(HTTPS_SUPPORT)
-    target_sources(microhttpd PRIVATE src/microhttpd/connection_https.c)
-endif()
-
-set_target_properties(microhttpd
-    PROPERTIES
-        # create *nix style library versions + symbolic links
-        VERSION ${major}.${minor}.${micro}
-        SOVERSION ${major}
-        INSTALL_RPATH ""
-)
-target_include_directories(microhttpd PRIVATE src/microhttpd src/include ${CMAKE_BINARY_DIR})
-target_compile_definitions(microhttpd PRIVATE ${CMAKE_REQUIRED_DEFINITIONS})
-target_link_libraries(microhttpd PRIVATE ${CMAKE_REQUIRED_LIBRARIES})
-if (NSS_FOUND)
-    target_link_libraries(microhttpd PRIVATE ${NSS_LDFLAGS})
-    target_compile_definitions(microhttpd PRIVATE ${NSS_CFLAGS_OTHER})
-endif()
-if (LIBGCRYPT_FOUND)
-    target_link_libraries(microhttpd PRIVATE ${LIBGCRYPT_LIBRARIES})
-endif()
-if (GNUTLS_FOUND)
-    target_link_libraries(microhttpd PRIVATE ${GNUTLS_LIBRARIES})
-    target_compile_definitions(microhttpd PRIVATE ${GNUTLS_DEFINITIONS})
-endif()
-if (HAVE_OPTION_VISIBILITY)
-    target_compile_options(microhttpd PRIVATE -fvisibility=hidden)
-endif()
-
-install(TARGETS microhttpd
-    EXPORT ${PROJECT_NAME}
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib NAMELINK_SKIP
-    ARCHIVE DESTINATION lib)
-install(EXPORT ${PROJECT_NAME} NAMESPACE mirohttpd DESTINATION lib/${PROJECT_NAME})
-install(DIRECTORY ${PROJECT_SOURCE_DIR}/src/include DESTINATION include PATTERN *.h PERMISSIONS OWNER_READ GROUP_READ)
+add_subdirectory(src/microhttpd)
 
 if (ENABLE_TESTS)
     add_subdirectory(src/testcurl)

@@ -3,7 +3,6 @@
 #
 cmake_minimum_required(VERSION 3.9)
 
-include(CTest)
 include(ProcessorCount)
 include(CheckLibraryExists)
 include(cmake/DetermineFork)
@@ -22,15 +21,13 @@ ProcessorCount(CPU_COUNT)
 add_definitions(-DCPU_COUNT=${CPU_COUNT} ${LIBCURL_CPPFLAGS} ${GNUTLS_DEFINITIONS} -DABS_SRCDIR="${CMAKE_CURRENT_SOURCE_DIR}")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR}/src/microhttpd ${PROJECT_SOURCE_DIR}/src/include)
 
-enable_testing()
-
 if (HAVE_GNUTLS_SNI)
     add_executable(test_https_sni test_https_sni.c tls_test_common.c)
     target_link_libraries(test_https_sni microhttpd libcurl_version_check ${GNUTLS_LIBRARIES} ${CURL_LIBRARIES})
     add_test(NAME https_sni COMMAND test_https_sni)
 endif()
 
-set(CMAKE_THREAD_PREFER_PTHREAD yes)
+set(THREADS_HAVE_PTHREAD_ARG yes)
 include(FindThreads)
 
 if (CMAKE_USE_PTHREADS_INIT)
