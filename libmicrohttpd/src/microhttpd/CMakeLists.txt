@@ -87,11 +87,18 @@ install(DIRECTORY ${PROJECT_SOURCE_DIR}/src/include/ DESTINATION include/microht
 
 ProcessorCount(CPU_COUNT)
 
-add_executable(test_str_compare test_str.c mhd_str.c)
-add_test(NAME str_compare COMMAND test_str_compare)
+if (MSVC)
+    set(SOCKET_LIBS Ws2_32)
+endif()
 
-add_executable(test_str_to_value test_str.c mhd_str.c)
-add_test(NAME str_to_value COMMAND test_str_to_value)
+if (NOT MSVC)
+    # it is not possible to compile test_str.c witn MSVC
+    add_executable(test_str_compare test_str.c mhd_str.c)
+    add_test(NAME str_compare COMMAND test_str_compare)
+
+    add_executable(test_str_to_value test_str.c mhd_str.c)
+    add_test(NAME str_to_value COMMAND test_str_to_value)
+endif()
 
 add_executable(test_str_token test_str_token.c mhd_str.c)
 add_test(NAME str_token COMMAND test_str_token)
@@ -103,7 +110,7 @@ set(THREADS_HAVE_PTHREAD_ARG yes)
 include(FindThreads)
 
 add_executable(test_shutdown_select test_shutdown_select.c)
-target_link_libraries(test_shutdown_select Threads::Threads)
+target_link_libraries(test_shutdown_select Threads::Threads ${SOCKET_LIBS})
 target_compile_options(test_shutdown_select PRIVATE -DCPU_COUNT=${CPU_COUNT})
 add_test(NAME shutdown_select COMMAND test_shutdown_select)
 if (NOT HAVE_LISTEN_SHUTDOWN)
@@ -111,7 +118,7 @@ if (NOT HAVE_LISTEN_SHUTDOWN)
 endif()
 
 add_executable(test_shutdown_poll test_shutdown_select.c mhd_threads.h)
-target_link_libraries(test_shutdown_poll Threads::Threads)
+target_link_libraries(test_shutdown_poll Threads::Threads ${SOCKET_LIBS})
 target_compile_options(test_shutdown_poll PRIVATE -DCPU_COUNT=${CPU_COUNT})
 add_test(NAME shutdown_poll COMMAND test_shutdown_poll)
 if (NOT HAVE_LISTEN_SHUTDOWN)
@@ -140,10 +147,14 @@ if (CMAKE_USE_PTHREADS_INIT)
 endif()
 
 if (HAVE_POSTPROCESSOR)
-    add_executable(test_postprocessor test_postprocessor.c)
-    target_link_libraries(test_postprocessor microhttpd)
-    target_compile_options(test_postprocessor PRIVATE -DCPU_COUNT=${CPU_COUNT} ${GNUTLS_DEFINITIONS})
-    add_test(NAME postprocessor COMMAND test_postprocessor)
+    if (NOT MSVC)
+        # it is not possible to compile test_postprocessor.c witn MSVC
+        
+        add_executable(test_postprocessor test_postprocessor.c)
+        target_link_libraries(test_postprocessor microhttpd)
+        target_compile_options(test_postprocessor PRIVATE -DCPU_COUNT=${CPU_COUNT} ${GNUTLS_DEFINITIONS})
+        add_test(NAME postprocessor COMMAND test_postprocessor)
+    endif()
     
     add_executable(test_postprocessor_large test_postprocessor_large.c)
     target_link_libraries(test_postprocessor_large microhttpd)

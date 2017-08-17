@@ -16,7 +16,7 @@ endif()
 
 ProcessorCount(CPU_COUNT)
 add_definitions(-DCPU_COUNT=${CPU_COUNT} ${LIBCURL_CPPFLAGS})
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR}/src/microhttpd ${PROJECT_SOURCE_DIR}/src/include)
+include_directories(${CURL_INCLUDE_DIRS} ${CMAKE_CURRENT_SOURCE_DIR} ${PROJECT_BINARY_DIR} ${PROJECT_SOURCE_DIR}/src/microhttpd ${PROJECT_SOURCE_DIR}/src/include)
 
 add_executable(test_start_stop test_start_stop.c)
 target_link_libraries(test_start_stop microhttpd)
