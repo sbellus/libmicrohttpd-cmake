@@ -5,7 +5,6 @@ I try to rewrite autotools to CMake.
 I test it on Windows MSVC2005 (some changes in source) and MSVC2015, and Linux Debian Lenny, RedHat 6.4 and cross compiling for arm.
 
 *Missing*
-- src/testzzuf
 - pdf documentation
 - RC file on windows
 

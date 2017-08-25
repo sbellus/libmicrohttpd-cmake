@@ -10,7 +10,7 @@ if (NOT CURL_FOUND)
     return()
 endif()
 
-if (ENABLE_HTTPS)
+if (HTTPS_SUPPORT)
     add_subdirectory(https)
 endif()
 

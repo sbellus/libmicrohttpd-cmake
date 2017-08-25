@@ -46,7 +46,7 @@ target_link_libraries(fileserver_example_external_select microhttpd)
 add_executable(refuse_post_example refuse_post_example.c)
 target_link_libraries(refuse_post_example microhttpd)
 
-if (ENABLE_HTTPS)
+if (HTTPS_SUPPORT)
     add_executable(https_fileserver_example https_fileserver_example.c)
     target_link_libraries(https_fileserver_example microhttpd)
     target_compile_definitions(https_fileserver_example PRIVATE ${GNUTLS_DEFINITIONS})
